@@ -196,3 +196,4 @@ const FacultySection = () => {
 };
 
 export default FacultySection;
+
