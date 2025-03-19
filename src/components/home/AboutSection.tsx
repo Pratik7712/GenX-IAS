@@ -61,14 +61,14 @@ const AboutSection = ({
     role: "Founder",
     bio: "Mr. Shubham Pandey is a visionary educator with extensive experience in civil services coaching. With his deep understanding of the examination pattern and requirements, he has guided numerous students to success in UPSC and GPSC examinations.",
     imageUrl:
-      "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=400&q=80",
+      "/Shubham Pandey.jpg",
   },
   directorProfile = {
     name: "Mrs. Shradhha Solanki",
     role: "Managing Director",
     bio: "Mrs. Shradhha Solanki brings her expertise in educational management to GenX IAS Academy. Her strategic leadership and commitment to excellence have been instrumental in establishing the academy as a premier institution for civil services preparation.",
     imageUrl:
-      "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&q=80",
+      "/Shradhha Solanki.jpg",
   },
 }: AboutSectionProps) => {
   return (

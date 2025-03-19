@@ -150,16 +150,18 @@ const Header = ({
             transition={{ duration: 0.5, delay: 0.2 }}
           >
             <Link to="/" className="flex items-center">
-              <img
-                src="/GENX IAS LOGO.png"
-                alt="GenX IAS Academy"
-                className={`transition-all duration-300 ${scrolled ? "h-14 w-auto" : "h-20 w-auto"}`}
-                onError={(e) => {
-                  const target = e.target as HTMLImageElement;
-                  target.src =
-                    "https://api.dicebear.com/7.x/avataaars/svg?seed=GenXIAS";
-                }}
-              />
+              <div className={`overflow-hidden rounded-full border-2 border-crimson-300 p-1 transition-all duration-300 ${scrolled ? "h-16 w-16" : "h-20 w-20"}`}>
+                <img
+                  src="/GENX IAS LOGO.png"
+                  alt="GenX IAS Academy"
+                  className="h-full w-full object-cover transition-transform duration-300 hover:scale-105"
+                  onError={(e) => {
+                    const target = e.target as HTMLImageElement;
+                    target.src =
+                      "https://api.dicebear.com/7.x/avataaars/svg?seed=GenXIAS";
+                  }}
+                />
+              </div>
             </Link>
           </motion.div>
 
