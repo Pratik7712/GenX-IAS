@@ -175,7 +175,7 @@ const Header = ({
                     return (
                       <NavigationMenuItem key={index}>
                         <NavigationMenuTrigger
-                          className={`${isActive(item.href) ? "bg-midnight-700 text-white" : "text-white"} transition-all duration-300 hover:text-crimson-300`}
+                          className={`${isActive(item.href) ? "bg-midnight-700 text-white" : "text-white"} transition-all duration-300 hover:text-crimson-300 bg-transparent`}
                         >
                           {item.label}
                         </NavigationMenuTrigger>
@@ -213,7 +213,7 @@ const Header = ({
                     <NavigationMenuItem key={index}>
                       <Link
                         to={item.href}
-                        className={`${navigationMenuTriggerStyle()} ${isActive(item.href) ? "bg-midnight-700 text-white" : "text-white"} transition-all duration-300 hover:text-crimson-300`}
+                        className={`${navigationMenuTriggerStyle()} ${isActive(item.href) ? "bg-midnight-700 text-white" : "text-white"} transition-all duration-300 hover:text-crimson-300 bg-transparent`}
                       >
                         {item.label}
                       </Link>

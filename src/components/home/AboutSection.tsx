@@ -29,7 +29,7 @@ const Profile = ({
         <CardContent className="p-6">
           <div className="flex flex-col items-center text-center">
             <Avatar className="h-36 w-36 mb-5 border-2 border-crimson-500 shadow-lg">
-              <AvatarImage src={imageUrl} alt={name} />
+              <AvatarImage src={imageUrl} alt={name} style={{ objectFit: 'contain' }} />
               <AvatarFallback className="bg-midnight-100 text-midnight-600">
                 {name.charAt(0)}
               </AvatarFallback>
