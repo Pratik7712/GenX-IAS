@@ -2,7 +2,8 @@ import React from "react";
 import { motion } from "framer-motion";
 import { fadeIn, fadeInUp } from "@/lib/animations";
 import { Card, CardContent } from "../ui/card";
-import { CalendarClock, Users, Clock } from "lucide-react";
+import { CalendarClock, Users, Clock, ArrowRight } from "lucide-react";
+import { Button } from "../ui/button";
 
 interface BatchProps {
   title: string;
@@ -19,6 +20,18 @@ const BatchCard = ({
   slots,
   isPopular = false,
 }: BatchProps) => {
+  const handleEnrollClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    const contactSection = document.getElementById('contact');
+    if (contactSection) {
+      const offsetTop = contactSection.offsetTop - 80;
+      window.scrollTo({
+        top: offsetTop,
+        behavior: 'smooth'
+      });
+    }
+  };
+
   return (
     <motion.div
       initial="hidden"
@@ -27,7 +40,7 @@ const BatchCard = ({
       variants={fadeInUp}
       className="h-full"
     >
-      <Card className="h-full overflow-hidden transition-all duration-300 hover:shadow-xl border-midnight-200 bg-white relative">
+      <Card className="h-full overflow-hidden transition-all duration-300 hover:shadow-xl border-midnight-200 bg-white relative flex flex-col">
         {isPopular && (
           <div className="absolute top-0 right-0">
             <div className="bg-crimson-500 text-white text-xs uppercase font-bold py-1 px-3 tracking-wider transform rotate-45 translate-x-5 translate-y-3 shadow-md">
@@ -35,29 +48,47 @@ const BatchCard = ({
             </div>
           </div>
         )}
-        <CardContent className="p-6">
-          <h3 className="text-xl font-bold text-midnight-600 mb-4">{title}</h3>
-          
-          <div className="space-y-3 mb-5">
-            <div className="flex items-center">
-              <CalendarClock className="h-5 w-5 text-crimson-500 mr-3" />
-              <span className="text-gray-700">Starts: {startDate}</span>
-            </div>
+        <CardContent className="p-6 flex flex-col h-full">
+          <div className="flex-grow">
+            <h3 className="text-xl font-bold text-midnight-600 mb-4">{title}</h3>
             
-            <div className="flex items-center">
-              <Clock className="h-5 w-5 text-crimson-500 mr-3" />
-              <span className="text-gray-700">Duration: {duration}</span>
-            </div>
-            
-            <div className="flex items-center">
-              <Users className="h-5 w-5 text-crimson-500 mr-3" />
-              <span className="text-gray-700">Available Slots: {slots}</span>
+            <div className="space-y-3 mb-5">
+              <div className="flex items-center">
+                <CalendarClock className="h-5 w-5 text-crimson-500 mr-3" />
+                <span className="text-gray-700">Starts: {startDate}</span>
+              </div>
+              
+              <div className="flex items-center">
+                <Clock className="h-5 w-5 text-crimson-500 mr-3" />
+                <span className="text-gray-700">Duration: {duration}</span>
+              </div>
+              
+              <div className="flex items-center">
+                <Users className="h-5 w-5 text-crimson-500 mr-3" />
+                <span className="text-gray-700">Available Slots: {slots}</span>
+              </div>
             </div>
           </div>
           
-          <button className="w-full py-2 px-4 bg-midnight-600 hover:bg-midnight-700 text-white rounded-md transition-colors duration-300 font-medium">
-            Enroll Now
-          </button>
+          <motion.div
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            className="mt-auto"
+          >
+            <Button
+              className="w-full bg-crimson-500 hover:bg-crimson-600 text-white shadow-md hover:shadow-lg transition-all duration-300 py-6 text-base font-medium group"
+              asChild
+            >
+              <a
+                href="#contact"
+                onClick={handleEnrollClick}
+                className="flex items-center justify-center"
+              >
+                Enroll Now
+                <ArrowRight className="ml-2 h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
+              </a>
+            </Button>
+          </motion.div>
         </CardContent>
       </Card>
     </motion.div>

@@ -2,7 +2,8 @@ import React from "react";
 import { motion } from "framer-motion";
 import { fadeIn, fadeInUp } from "@/lib/animations";
 import { Card, CardContent } from "../ui/card";
-import { BookOpen, Clock, Award, Check } from "lucide-react";
+import { BookOpen, Clock, Award, Check, ArrowRight } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 interface CourseProps {
   title: string;
@@ -10,7 +11,6 @@ interface CourseProps {
   duration: string;
   features: string[];
   image: string;
-  price: string;
   popular?: boolean;
 }
 
@@ -20,9 +20,20 @@ const CourseCard = ({
   duration,
   features,
   image,
-  price,
-  popular = false,
+  popular,
 }: CourseProps) => {
+  const handleEnrollClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    const contactSection = document.getElementById('contact');
+    if (contactSection) {
+      const offsetTop = contactSection.offsetTop - 80;
+      window.scrollTo({
+        top: offsetTop,
+        behavior: 'smooth'
+      });
+    }
+  };
+
   return (
     <motion.div
       initial="hidden"
@@ -31,50 +42,59 @@ const CourseCard = ({
       variants={fadeInUp}
       className="h-full"
     >
-      <Card className="overflow-hidden transition-all duration-300 hover:shadow-xl border-midnight-200 relative h-full">
+      <Card className="relative h-full overflow-hidden hover:shadow-xl transition-all duration-300 bg-white border-midnight-200">
         {popular && (
-          <div className="absolute top-0 right-0 z-10">
-            <div className="bg-crimson-500 text-white text-xs font-bold py-1 px-3 tracking-wider transform rotate-45 translate-x-5 translate-y-3 shadow-md">
-              POPULAR
-            </div>
+          <div className="absolute top-4 right-4 bg-crimson-500 text-white px-3 py-1 rounded-full text-sm font-medium shadow-lg">
+            Popular
           </div>
         )}
-        <div className="relative h-48 overflow-hidden">
-          <img
-            src={image}
-            alt={title}
-            className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
-          />
-        </div>
-        <CardContent className="p-6">
-          <div className="flex justify-between items-start mb-4">
-            <h3 className="text-xl font-bold text-midnight-600">{title}</h3>
-            <div className="flex items-center bg-midnight-50 px-3 py-1 rounded-full border border-midnight-100">
-              <Clock className="h-4 w-4 text-crimson-500 mr-1" />
-              <span className="text-xs font-medium text-gray-700">
-                {duration}
-              </span>
-            </div>
+        <CardContent className="p-0 flex flex-col h-full">
+          <div className="relative h-48 overflow-hidden">
+            <div className="absolute inset-0 bg-gradient-to-t from-midnight-600/60 to-transparent z-10"></div>
+            <img
+              src={image}
+              alt={title}
+              className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
+            />
           </div>
-
-          <p className="text-gray-600 mb-4">{description}</p>
-
-          <div className="space-y-2 mb-6">
-            {features.map((feature, index) => (
-              <div key={index} className="flex items-start">
-                <div className="mr-2 mt-1">
-                  <Check className="h-4 w-4 text-crimson-500" />
-                </div>
-                <span className="text-sm text-gray-700">{feature}</span>
+          <div className="p-6 flex flex-col flex-grow">
+            <div className="flex-grow">
+              <h3 className="text-xl font-bold text-midnight-600 mb-2">{title}</h3>
+              <p className="text-gray-600 mb-4">{description}</p>
+              
+              <div className="flex items-center mb-4 text-sm text-midnight-500">
+                <Clock className="h-4 w-4 mr-2" />
+                <span>{duration}</span>
               </div>
-            ))}
-          </div>
 
-          <div className="flex justify-between items-center mt-auto pt-4 border-t border-gray-100">
-            <div className="text-crimson-500 font-bold text-xl">{price}</div>
-            <button className="px-4 py-2 bg-midnight-600 hover:bg-midnight-700 text-white rounded-md transition-colors duration-300 text-sm font-medium">
-              Enroll Now
-            </button>
+              <ul className="space-y-2 mb-6">
+                {features.map((feature, index) => (
+                  <li key={index} className="flex items-start">
+                    <Check className="h-5 w-5 text-crimson-500 mr-2 mt-0.5 flex-shrink-0" />
+                    <span className="text-gray-600">{feature}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <motion.div
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+            >
+              <Button
+                className="w-full bg-crimson-500 hover:bg-crimson-600 text-white shadow-md hover:shadow-lg transition-all duration-300 py-6 text-base font-medium group"
+                asChild
+              >
+                <a
+                  href="#contact"
+                  onClick={handleEnrollClick}
+                  className="flex items-center justify-center"
+                >
+                  Enroll Now
+                  <ArrowRight className="ml-2 h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
+                </a>
+              </Button>
+            </motion.div>
           </div>
         </CardContent>
       </Card>
@@ -96,7 +116,6 @@ const CoursesSection = () => {
         "Study materials included",
       ],
       image: "https://images.unsplash.com/photo-1571260899304-425eee4c7efc?w=500&q=80",
-      price: "₹1,25,000",
       popular: true,
     },
     {
@@ -111,7 +130,6 @@ const CoursesSection = () => {
         "Personality development sessions",
       ],
       image: "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=500&q=80",
-      price: "₹85,000",
     },
     {
       title: "UPSC Interview Preparation",
@@ -125,7 +143,6 @@ const CoursesSection = () => {
         "Detailed feedback after each session",
       ],
       image: "https://images.unsplash.com/photo-1507537297725-24a1c029d3ca?w=500&q=80",
-      price: "₹45,000",
     },
     {
       title: "UPSC Optional Subject",
@@ -139,7 +156,6 @@ const CoursesSection = () => {
         "Previous year questions analysis",
       ],
       image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=500&q=80",
-      price: "₹65,000",
     },
   ];
 

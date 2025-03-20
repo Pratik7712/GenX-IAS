@@ -78,7 +78,7 @@ const SuccessStoriesSection = () => {
       rank: "45",
       batch: "2020-21",
       testimonial:
-        "GenX IAS Academy played a crucial role in my UPSC journey. The structured approach, comprehensive study material, and personal mentoring helped me secure a top rank.",
+        "GenX IAS Institute played a crucial role in my UPSC journey. The structured approach, comprehensive study material, and personal mentoring helped me secure a top rank.",
       image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&q=80",
     },
     {
@@ -162,7 +162,7 @@ const SuccessStoriesSection = () => {
           className="mt-12 text-center"
         >
           <p className="text-gray-600 mb-6">
-            Join GenX IAS Academy and become our next success story!
+            Join GenX IAS Institute and become our next success story!
           </p>
           <a
             href="#contact"

@@ -123,8 +123,9 @@ const ContactSection = () => {
                   <div>
                     <h4 className="font-bold mb-1">Our Location</h4>
                     <p className="text-white/80">
-                      123 Education Street, Academic Plaza, <br />
-                      Ahmedabad, Gujarat 380015
+                      3rd floor, SHREE business hub, TELEPHONE EXCHANGE,<br />
+                      Beside green rio restaurant, GIDC Naroda<br />
+                      Ahmedabad, Gujarat 382330
                     </p>
                   </div>
                 </div>
@@ -135,8 +136,7 @@ const ContactSection = () => {
                   </div>
                   <div>
                     <h4 className="font-bold mb-1">Phone Number</h4>
-                    <p className="text-white/80">+91 98765 43210</p>
-                    <p className="text-white/80">+91 98765 43211</p>
+                    <p className="text-white/80">7990661375</p>
                   </div>
                 </div>
 
@@ -146,8 +146,7 @@ const ContactSection = () => {
                   </div>
                   <div>
                     <h4 className="font-bold mb-1">Email Address</h4>
-                    <p className="text-white/80">info@genxias.com</p>
-                    <p className="text-white/80">admissions@genxias.com</p>
+                    <p className="text-white/80">genxias@gmail.com</p>
                   </div>
                 </div>
 

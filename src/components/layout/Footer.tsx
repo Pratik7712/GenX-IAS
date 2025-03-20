@@ -54,7 +54,7 @@ const Footer = () => {
             viewport={{ once: true }}
           >
             <h2 className="text-2xl font-bold mb-4 font-heading">
-              GenX IAS Academy
+              GenX IAS Institute
             </h2>
             <p className="mb-6 text-gray-100">
               Empowering aspirants to achieve excellence in civil services
@@ -180,19 +180,19 @@ const Footer = () => {
               <li className="flex items-start group">
                 <MapPin className="mr-3 h-5 w-5 text-crimson-400 flex-shrink-0 mt-0.5 group-hover:scale-110 transition-transform duration-300" />
                 <span className="text-gray-100 group-hover:text-crimson-300 transition-colors">
-                  123 Education Street, Ahmedabad, Gujarat, India - 380001
+                  3rd floor, SHREE business hub, TELEPHONE EXCHANGE, Beside green rio restaurant, GIDC Naroda, Ahmedabad, Gujarat 382330
                 </span>
               </li>
               <li className="flex items-center group">
                 <Phone className="mr-3 h-5 w-5 text-crimson-400 group-hover:scale-110 transition-transform duration-300" />
                 <span className="text-gray-100 group-hover:text-crimson-300 transition-colors">
-                  +91 98765 43210
+                  7990661375
                 </span>
               </li>
               <li className="flex items-center group">
                 <Mail className="mr-3 h-5 w-5 text-crimson-400 group-hover:scale-110 transition-transform duration-300" />
                 <span className="text-gray-100 group-hover:text-crimson-300 transition-colors">
-                  info@genxiasacademy.com
+                  genxias@gmail.com
                 </span>
               </li>
             </ul>
@@ -200,7 +200,7 @@ const Footer = () => {
         </div>
 
         <div className="border-t border-midnight-600 mt-12 pt-8 text-center text-gray-100">
-          <p>&copy; {currentYear} GenX IAS Academy. All rights reserved.</p>
+          <p>&copy; {currentYear} GenX IAS Institute. All rights reserved.</p>
         </div>
       </div>
 

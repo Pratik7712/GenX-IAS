@@ -27,9 +27,9 @@ const defaultSlides = [
     id: 1,
     image:
       "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=1200&q=80",
-    title: "Welcome to GenX IAS Academy",
+    title: "Welcome to GenX IAS Institute",
     description:
-      "Premier coaching institute for UPSC, GPSC, and other competitive exams",
+      "we're serving at AHMEDABAD, VADODARA, BHAVNAGAR, KUTCH",
     ctaText: "Explore Courses",
     ctaLink: "#courses",
   },
@@ -37,20 +37,20 @@ const defaultSlides = [
     id: 2,
     image:
       "https://images.unsplash.com/photo-1577896851231-70ef18881754?w=1200&q=80",
-    title: "Expert Faculty",
-    description: "Learn from experienced educators with proven track records",
-    ctaText: "Meet Our Faculty",
-    ctaLink: "#faculty",
+    title: "Our Student Our Future",
+    // description: "Learn from experienced educators with proven track records",
+    // ctaText: "Meet Our Faculty",
+    // ctaLink: "#faculty",
   },
   {
     id: 3,
     image:
       "https://images.unsplash.com/photo-1541339907198-e08756dedf3f?w=1200&q=80",
-    title: "Success Stories",
-    description:
-      "Join the ranks of our successful students who achieved their dreams",
-    ctaText: "View Success Stories",
-    ctaLink: "#success-stories",
+    title: "Enroll now to scroll into your future",
+    // description:
+    //   "Join the ranks of our successful students who achieved their dreams",
+    // ctaText: "View Success Stories",
+    // ctaLink: "#success-stories",
   },
 ];
 

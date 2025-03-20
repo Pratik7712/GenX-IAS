@@ -55,7 +55,7 @@ interface AboutSectionProps {
 
 const AboutSection = ({
   visionMission = "Our vision is to be the premier institute for civil services preparation, empowering aspirants to achieve excellence through quality education, personalized guidance, and comprehensive study materials. We are committed to nurturing future leaders who will serve the nation with integrity and dedication.",
-  academyOverview = "GenX IAS Academy is a leading coaching institute dedicated to preparing students for UPSC, GPSC, and other competitive examinations. With state-of-the-art facilities, experienced faculty, and a proven track record of success, we provide comprehensive coaching programs tailored to meet the needs of civil service aspirants.",
+  academyOverview = "GenX IAS Institute is a leading coaching institute dedicated to preparing students for UPSC, GPSC, and other competitive examinations. With state-of-the-art facilities, experienced faculty, and a proven track record of success, we provide comprehensive coaching programs tailored to meet the needs of civil service aspirants.",
   founderProfile = {
     name: "Mr. Shubham Pandey",
     role: "Founder",
@@ -64,9 +64,9 @@ const AboutSection = ({
       "/Shubham Pandey.jpg",
   },
   directorProfile = {
-    name: "Mrs. Shradhha Solanki",
+    name: "Ms. Shradhha Solanki",
     role: "Managing Director",
-    bio: "Mrs. Shradhha Solanki brings her expertise in educational management to GenX IAS Academy. Her strategic leadership and commitment to excellence have been instrumental in establishing the academy as a premier institution for civil services preparation.",
+    bio: "Ms. Shradhha Solanki brings her expertise in educational management to GenX IAS Institute. Her strategic leadership and commitment to excellence have been instrumental in establishing the institute as a premier institution for civil services preparation.",
     imageUrl:
       "/Shradhha Solanki.jpg",
   },
@@ -85,7 +85,7 @@ const AboutSection = ({
             variants={fadeInUp}
           >
             <h2 className="text-3xl md:text-4xl font-bold text-midnight-600 mb-3">
-              About GenX IAS Academy
+              About GenX IAS Institute
             </h2>
             <div className="w-24 h-1 bg-crimson-500 mx-auto mb-6"></div>
             <p className="text-gray-600 max-w-3xl mx-auto">
@@ -105,7 +105,7 @@ const AboutSection = ({
                   <div className="absolute inset-0 bg-gradient-to-r from-midnight-600/90 to-midnight-500/80 z-10"></div>
                   <img
                     src="https://images.unsplash.com/photo-1577896851231-70ef18881754?w=800&q=80"
-                    alt="Academy Building"
+                    alt="Institute Building"
                     className="w-full h-full object-cover"
                   />
                   <div className="absolute inset-0 z-20 flex flex-col justify-center p-8 text-white">
@@ -161,37 +161,43 @@ const AboutSection = ({
                     variants={fadeInUp}
                   >
                     <h3 className="text-2xl font-bold text-midnight-600 mb-4">
-                      Academy Overview
+                      Institute Overview
                     </h3>
                     <div className="w-16 h-1 bg-crimson-500 mb-4"></div>
                     <p className="text-gray-700 leading-relaxed mb-6">
                       {academyOverview}
                     </p>
 
-                    <div className="flex flex-wrap gap-4 mt-6">
-                      <div className="flex items-center bg-midnight-50 p-3 rounded-lg shadow-sm hover:shadow-md transition-all duration-300 border border-midnight-100">
-                        <div className="w-12 h-12 bg-midnight-100 rounded-full flex items-center justify-center mr-3 text-crimson-500">
-                          <Check className="h-6 w-6" />
+                    <div className="flex flex-wrap gap-6">
+                      <div className="flex-1 min-w-[250px] items-center bg-midnight-50 p-4 rounded-lg shadow-sm hover:shadow-md transition-all duration-300 border border-midnight-100">
+                        <div className="flex items-center">
+                          <div className="w-14 h-14 bg-midnight-100 rounded-full flex items-center justify-center mr-4 text-crimson-500">
+                            <Check className="h-7 w-7" />
+                          </div>
+                          <span className="text-midnight-600 font-medium">
+                            Expert Faculty
+                          </span>
                         </div>
-                        <span className="text-midnight-600 font-medium">
-                          Expert Faculty
-                        </span>
                       </div>
-                      <div className="flex items-center bg-midnight-50 p-3 rounded-lg shadow-sm hover:shadow-md transition-all duration-300 border border-midnight-100">
-                        <div className="w-12 h-12 bg-midnight-100 rounded-full flex items-center justify-center mr-3 text-crimson-500">
-                          <BookOpen className="h-6 w-6" />
+                      <div className="flex-1 min-w-[250px] items-center bg-midnight-50 p-4 rounded-lg shadow-sm hover:shadow-md transition-all duration-300 border border-midnight-100">
+                        <div className="flex items-center">
+                          <div className="w-14 h-14 bg-midnight-100 rounded-full flex items-center justify-center mr-4 text-crimson-500">
+                            <BookOpen className="h-7 w-7" />
+                          </div>
+                          <span className="text-midnight-600 font-medium">
+                            Comprehensive Study Material
+                          </span>
                         </div>
-                        <span className="text-midnight-600 font-medium">
-                          Comprehensive Study Material
-                        </span>
                       </div>
-                      <div className="flex items-center bg-midnight-50 p-3 rounded-lg shadow-sm hover:shadow-md transition-all duration-300 border border-midnight-100">
-                        <div className="w-12 h-12 bg-midnight-100 rounded-full flex items-center justify-center mr-3 text-crimson-500">
-                          <ClipboardCheck className="h-6 w-6" />
+                      <div className="flex-1 min-w-[250px] items-center bg-midnight-50 p-4 rounded-lg shadow-sm hover:shadow-md transition-all duration-300 border border-midnight-100">
+                        <div className="flex items-center">
+                          <div className="w-14 h-14 bg-midnight-100 rounded-full flex items-center justify-center mr-4 text-crimson-500">
+                            <ClipboardCheck className="h-7 w-7" />
+                          </div>
+                          <span className="text-midnight-600 font-medium">
+                            Regular Test Series
+                          </span>
                         </div>
-                        <span className="text-midnight-600 font-medium">
-                          Regular Test Series
-                        </span>
                       </div>
                     </div>
                   </motion.div>
@@ -201,12 +207,12 @@ const AboutSection = ({
           </Card>
         </div>
 
-        {/* Leadership Section */}
+        {/* Director's Desk Section */}
         <div className="bg-white py-12 px-6 rounded-xl shadow-lg mb-8">
           <h3 className="text-2xl md:text-3xl font-bold text-midnight-600 mb-8 text-center">
-            Our Leadership
+            Director's Desk
           </h3>
-          <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+          <div className="flex flex-col gap-8 max-w-3xl mx-auto">
             <Profile
               name={founderProfile.name}
               role={founderProfile.role}
