@@ -1,8 +1,6 @@
 import React from "react";
 import {
-  Facebook,
   Instagram,
-  Twitter,
   Youtube,
   Mail,
   Phone,
@@ -62,15 +60,19 @@ const Footer = () => {
             </p>
             <div className="flex space-x-5">
               <motion.a
-                href="#"
+                href="https://www.youtube.com/@genxias7638"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="text-white hover:text-crimson-300 transition-colors bg-midnight-600 p-2.5 rounded-full"
                 variants={socialIconVariants}
                 whileHover="hover"
               >
-                <Facebook size={20} />
+                <Youtube size={20} />
               </motion.a>
               <motion.a
-                href="#"
+                href="https://www.instagram.com/genx.ias/"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="text-white hover:text-crimson-300 transition-colors bg-midnight-600 p-2.5 rounded-full"
                 variants={socialIconVariants}
                 whileHover="hover"
@@ -78,20 +80,26 @@ const Footer = () => {
                 <Instagram size={20} />
               </motion.a>
               <motion.a
-                href="#"
+                href="https://t.me/GenXIAS"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="text-white hover:text-crimson-300 transition-colors bg-midnight-600 p-2.5 rounded-full"
                 variants={socialIconVariants}
                 whileHover="hover"
               >
-                <Twitter size={20} />
-              </motion.a>
-              <motion.a
-                href="#"
-                className="text-white hover:text-crimson-300 transition-colors bg-midnight-600 p-2.5 rounded-full"
-                variants={socialIconVariants}
-                whileHover="hover"
-              >
-                <Youtube size={20} />
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path d="M21.99 5.363l-3.379 15.927c-.255 1.122-.92 1.403-1.867.875l-5.156-3.797-2.487 2.391c-.275.275-.505.505-1.035.505l.369-5.235L16.51 8.215c.393-.349-.085-.542-.61-.193L6.225 13.899l-5.077-1.588c-1.104-.344-1.122-1.104.229-1.632L20.622 3.745c.919-.344 1.722.204 1.368 1.618z"></path>
+                </svg>
               </motion.a>
             </div>
           </motion.div>
@@ -144,23 +152,33 @@ const Footer = () => {
             </h3>
             <ul className="space-y-3">
               {[
-                { to: "/courses/upsc", label: "UPSC Program" },
-                { to: "/courses/gpsc", label: "GPSC Program" },
-                { to: "/courses/pi", label: "PI Program" },
-                { to: "/courses/psi", label: "PSI/CONSTABLE Program" },
-                { to: "/courses/cce", label: "CCE Program" },
+                { to: "/#courses", label: "UPSC Program", isScroll: true },
+                { to: "/#courses", label: "GPSC Program", isScroll: true },
+                { to: "/#courses", label: "PI Program", isScroll: true },
+                { to: "/#courses", label: "PSI/CONSTABLE Program", isScroll: true },
+                { to: "/#courses", label: "CCE Program", isScroll: true }
               ].map((program, index) => (
                 <motion.li
                   key={index}
                   variants={linkVariants}
                   whileHover="hover"
                 >
-                  <Link
-                    to={program.to}
+                  <a
+                    href={program.to}
                     className="text-gray-100 hover:text-crimson-300 transition-colors flex items-center"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      const element = document.getElementById('courses');
+                      if (element) {
+                        element.scrollIntoView({
+                          behavior: 'smooth',
+                          block: 'start',
+                        });
+                      }
+                    }}
                   >
                     <span className="mr-2">›</span> {program.label}
-                  </Link>
+                  </a>
                 </motion.li>
               ))}
             </ul>

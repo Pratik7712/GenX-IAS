@@ -25,7 +25,7 @@ interface HeroSliderProps {
 const defaultSlides = [
   {
     id: 1,
-    image:
+    image3:
       "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=1200&q=80",
     title: "Welcome to GenX IAS Institute",
     description:
