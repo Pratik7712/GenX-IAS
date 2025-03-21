@@ -226,8 +226,8 @@ const Header = ({
                           className={`${
                             isActive(item.href)
                               ? "text-[#ED344C] font-semibold"
-                              : "text-white hover:text-[#ED344C]"
-                          } transition-all duration-300 bg-transparent text-[16px] tracking-wide hover:bg-midnight-500/30`}
+                              : "text-white"
+                          } transition-all duration-300 bg-transparent text-[16px] tracking-wide hover:bg-transparent hover:text-[#ED344C]`}
                         >
                           {item.label}
                         </NavigationMenuTrigger>
@@ -248,8 +248,8 @@ const Header = ({
                                 className={`block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-all duration-300 ${
                                   isActive(subItem.href)
                                     ? "text-[#ED344C] font-semibold"
-                                    : "text-white hover:text-[#ED344C]"
-                                } hover:bg-midnight-500/30 text-[15px]`}
+                                    : "text-white"
+                                } hover:bg-midnight-500/30 hover:text-[#ED344C] !hover:text-[#ED344C] text-[15px]`}
                               >
                                 <div className="text-[15px] font-medium leading-none">
                                   {subItem.label}
@@ -279,8 +279,8 @@ const Header = ({
                         className={`${navigationMenuTriggerStyle()} ${
                           isActive(item.href)
                             ? "text-[#ED344C] font-semibold"
-                            : "text-white hover:text-[#ED344C]"
-                        } transition-all duration-300 bg-transparent text-[16px] tracking-wide hover:bg-midnight-500/30`}
+                            : "text-white"
+                        } transition-all duration-300 bg-transparent text-[16px] tracking-wide hover:text-[#ED344C] !hover:text-[#ED344C] hover:bg-transparent`}
                       >
                         {item.label}
                       </a>
@@ -361,8 +361,8 @@ const Header = ({
                       className={`block text-[16px] ${
                         isActive(item.href)
                           ? "text-[#ED344C] font-semibold"
-                          : "text-white hover:text-[#ED344C]"
-                      } transition-colors duration-300 tracking-wide`}
+                          : "text-white"
+                      } hover:text-[#ED344C] transition-all duration-300 tracking-wide`}
                     >
                       {item.label}
                     </a>
@@ -381,8 +381,8 @@ const Header = ({
                             className={`block text-[15px] ${
                               isActive(subItem.href)
                                 ? "text-[#ED344C] font-semibold"
-                                : "text-gray-300 hover:text-[#ED344C]"
-                            } transition-colors duration-300`}
+                                : "text-gray-300"
+                            } hover:text-[#ED344C] transition-all duration-300`}
                           >
                             {subItem.label}
                           </a>

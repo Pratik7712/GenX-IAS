@@ -25,32 +25,27 @@ interface HeroSliderProps {
 const defaultSlides = [
   {
     id: 1,
-    image3:
-      "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=1200&q=80",
+    image: "/silder1.png",
     title: "Welcome to GenX IAS Institute",
-    description:
-      "we're serving at AHMEDABAD, VADODARA, BHAVNAGAR, KUTCH",
+    description: "we're serving at AHMEDABAD, VADODARA, BHAVNAGAR, KUTCH",
     ctaText: "Explore Courses",
     ctaLink: "#courses",
   },
   {
     id: 2,
-    image:
-      "https://images.unsplash.com/photo-1577896851231-70ef18881754?w=1200&q=80",
+    image: "/Silder2.jpg",
     title: "Our Student Our Future",
-    // description: "Learn from experienced educators with proven track records",
-    // ctaText: "Meet Our Faculty",
-    // ctaLink: "#faculty",
+    description: "Learn from experienced educators with proven track records",
+    ctaText: "Meet Our Faculty",
+    ctaLink: "#faculty",
   },
   {
     id: 3,
-    image:
-      "https://images.unsplash.com/photo-1541339907198-e08756dedf3f?w=1200&q=80",
-    title: "Enroll now to scroll into your future",
-    // description:
-    //   "Join the ranks of our successful students who achieved their dreams",
-    // ctaText: "View Success Stories",
-    // ctaLink: "#success-stories",
+    image: "/silder3.png",
+    title: "Enroll now to secure your future",
+    description: "Join the ranks of our successful students who achieved their dreams",
+    ctaText: "View Success Stories",
+    ctaLink: "#success-stories",
   },
 ];
 
