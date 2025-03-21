@@ -13,7 +13,8 @@ const AppSection = () => {
               transition={{ duration: 0.5 }}
               className="text-3xl md:text-4xl font-bold mb-4"
             >
-              Get Started With <span className="text-[#ED344C]">GENX IAS</span> Today!
+              Get Started With{" "}<br/>
+              <span className="text-[#ED344C]">GENX IAS</span> Today!
             </motion.h2>
             <motion.p
               initial={{ opacity: 0, y: 20 }}

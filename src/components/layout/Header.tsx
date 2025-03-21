@@ -54,7 +54,7 @@ const Header = ({
         {
           label: "Managing Director",
           href: "#director",
-          description: "Meet Mrs. Shradhha Solanki, our managing director",
+          description: "Meet Ms. Shradhha Solanki, our managing director",
         },
       ],
     },
@@ -100,9 +100,9 @@ const Header = ({
 }: HeaderProps) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [activeSection, setActiveSection] = useState("/");
+  const [activeSection, setActiveSection] = useState("#home"); // Initialize with #home
 
-  // Handle scroll event to shrink navbar
+  // Handle scroll event to shrink navbar and update active section
   useEffect(() => {
     const handleScroll = () => {
       const offset = window.scrollY;
@@ -114,13 +114,20 @@ const Header = ({
 
       // Determine active section based on scroll position
       const sections = document.querySelectorAll("section[id]");
+      let foundActiveSection = false;
       sections.forEach((section) => {
         const sectionTop = (section as HTMLElement).offsetTop - 100;
         const sectionHeight = (section as HTMLElement).offsetHeight;
         if (offset >= sectionTop && offset < sectionTop + sectionHeight) {
           setActiveSection(`#${section.id}`);
+          foundActiveSection = true;
         }
       });
+
+      // If no section is in view, default to #home
+      if (!foundActiveSection && offset < 100) {
+        setActiveSection("#home");
+      }
     };
 
     window.addEventListener("scroll", handleScroll);
@@ -129,36 +136,36 @@ const Header = ({
 
   // Check if a menu item is active
   const isActive = (href: string) => {
-    if (href === "#home") return activeSection === "/" || activeSection === "#home";
     return activeSection === href;
   };
 
-  // Add smooth scrolling function
+  // Add smooth scrolling function and set active section on click
   const handleSmoothScroll = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     e.preventDefault();
-    
+
+    // Set the active section immediately on click
+    setActiveSection(href);
+
     // Handle special case for home
     if (href === "#home") {
       window.scrollTo({
         top: 0,
-        behavior: 'smooth'
+        behavior: "smooth",
       });
-      setActiveSection("#home");
       return;
     }
-    
+
     const targetId = href.replace("#", "");
     const targetElement = document.getElementById(targetId);
-    
+
     if (targetElement) {
       const offsetTop = targetElement.getBoundingClientRect().top + window.pageYOffset - 80;
       window.scrollTo({
         top: offsetTop,
-        behavior: 'smooth'
+        behavior: "smooth",
       });
-      setActiveSection(href);
     }
-    
+
     // Close mobile menu if it's open
     if (mobileMenuOpen) {
       setMobileMenuOpen(false);
@@ -167,7 +174,9 @@ const Header = ({
 
   return (
     <motion.header
-      className={`fixed top-0 left-0 right-0 z-50 w-full bg-gradient-to-b from-midnight-600 to-midnight-500 text-white backdrop-blur-sm transition-all duration-300 ${scrolled ? "shadow-lg py-1" : "shadow-md py-3"}`}
+      className={`fixed top-0 left-0 right-0 z-50 w-full bg-gradient-to-b from-midnight-600 to-midnight-500 text-white backdrop-blur-sm transition-all duration-300 ${
+        scrolled ? "shadow-lg py-1" : "shadow-md py-3"
+      }`}
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.5 }}
@@ -182,7 +191,11 @@ const Header = ({
             transition={{ duration: 0.5, delay: 0.2 }}
           >
             <Link to="/" className="flex items-center">
-              <div className={`overflow-hidden rounded-full border-2 border-crimson-300 p-1 transition-all duration-300 ${scrolled ? "h-16 w-16" : "h-20 w-20"}`}>
+              <div
+                className={`overflow-hidden rounded-full border-2 border-crimson-300 p-1 transition-all duration-300 ${
+                  scrolled ? "h-16 w-16" : "h-20 w-20"
+                }`}
+              >
                 <img
                   src="/GENX IAS LOGO.png"
                   alt="GenX IAS Institute"
@@ -205,11 +218,14 @@ const Header = ({
                   // If the item has a submenu, render a dropdown
                   if (item.submenu) {
                     return (
-                      <NavigationMenuItem key={index} className={index === 0 ? "mr-8" : ""}>
+                      <NavigationMenuItem
+                        key={index}
+                        className={index === 0 ? "mr-8" : ""}
+                      >
                         <NavigationMenuTrigger
                           className={`${
-                            isActive(item.href) 
-                              ? "bg-[#ED344C] text-white font-semibold" 
+                            isActive(item.href)
+                              ? "text-[#ED344C] font-semibold"
                               : "text-white hover:text-[#ED344C]"
                           } transition-all duration-300 bg-transparent text-[16px] tracking-wide hover:bg-midnight-500/30`}
                         >
@@ -226,12 +242,14 @@ const Header = ({
                               <a
                                 key={subIndex}
                                 href={subItem.href}
-                                onClick={(e) => handleSmoothScroll(e, subItem.href)}
+                                onClick={(e) =>
+                                  handleSmoothScroll(e, subItem.href)
+                                }
                                 className={`block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-all duration-300 ${
-                                  isActive(subItem.href) 
-                                    ? "bg-[#ED344C]/20 text-[#ED344C] font-semibold" 
-                                    : "text-white"
-                                } hover:bg-midnight-500/30 hover:text-[#ED344C] focus:bg-midnight-500/30 focus:text-[#ED344C] text-[15px]`}
+                                  isActive(subItem.href)
+                                    ? "text-[#ED344C] font-semibold"
+                                    : "text-white hover:text-[#ED344C]"
+                                } hover:bg-midnight-500/30 text-[15px]`}
                               >
                                 <div className="text-[15px] font-medium leading-none">
                                   {subItem.label}
@@ -251,13 +269,16 @@ const Header = ({
 
                   // Otherwise render a simple link
                   return (
-                    <NavigationMenuItem key={index} className={index === 0 ? "mr-8" : ""}>
+                    <NavigationMenuItem
+                      key={index}
+                      className={index === 0 ? "mr-8" : ""}
+                    >
                       <a
                         href={item.href}
                         onClick={(e) => handleSmoothScroll(e, item.href)}
                         className={`${navigationMenuTriggerStyle()} ${
-                          isActive(item.href) 
-                            ? "bg-[#ED344C] text-white font-semibold" 
+                          isActive(item.href)
+                            ? "text-[#ED344C] font-semibold"
                             : "text-white hover:text-[#ED344C]"
                         } transition-all duration-300 bg-transparent text-[16px] tracking-wide hover:bg-midnight-500/30`}
                       >
@@ -288,8 +309,8 @@ const Header = ({
                   size="sm"
                   className="bg-[#ED344C] hover:bg-[#ED344C]/80 shadow-md hover:shadow-lg transition-all duration-300 font-medium"
                 >
-                  <a 
-                    href="#contact" 
+                  <a
+                    href="#contact"
                     onClick={(e) => handleSmoothScroll(e, "#contact")}
                     className="text-white flex items-center"
                   >
@@ -330,15 +351,18 @@ const Header = ({
             >
               <nav className="flex flex-col space-y-1 p-4">
                 {menuItems.map((item, index) => (
-                  <div key={index} className={`py-2 ${index === 0 ? "mb-2" : ""}`}>
+                  <div
+                    key={index}
+                    className={`py-2 ${index === 0 ? "mb-2" : ""}`}
+                  >
                     <a
                       href={item.href}
                       onClick={(e) => handleSmoothScroll(e, item.href)}
                       className={`block text-[16px] ${
-                        isActive(item.href) 
-                          ? "text-[#ED344C] font-semibold" 
-                          : "text-white"
-                      } hover:text-[#ED344C] transition-colors duration-300 tracking-wide`}
+                        isActive(item.href)
+                          ? "text-[#ED344C] font-semibold"
+                          : "text-white hover:text-[#ED344C]"
+                      } transition-colors duration-300 tracking-wide`}
                     >
                       {item.label}
                     </a>
@@ -355,10 +379,10 @@ const Header = ({
                             href={subItem.href}
                             onClick={(e) => handleSmoothScroll(e, subItem.href)}
                             className={`block text-[15px] ${
-                              isActive(subItem.href) 
-                                ? "text-[#ED344C] font-semibold" 
-                                : "text-gray-300"
-                            } hover:text-[#ED344C] transition-colors duration-300`}
+                              isActive(subItem.href)
+                                ? "text-[#ED344C] font-semibold"
+                                : "text-gray-300 hover:text-[#ED344C]"
+                            } transition-colors duration-300`}
                           >
                             {subItem.label}
                           </a>
@@ -386,8 +410,8 @@ const Header = ({
                       size="sm"
                       className="mt-2 w-full bg-[#ED344C] hover:bg-[#ED344C]/80 shadow-md transition-all duration-300 font-medium"
                     >
-                      <a 
-                        href="#contact" 
+                      <a
+                        href="#contact"
                         onClick={(e) => handleSmoothScroll(e, "#contact")}
                         className="text-white"
                       >
