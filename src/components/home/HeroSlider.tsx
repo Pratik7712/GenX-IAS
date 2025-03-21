@@ -49,36 +49,6 @@ const defaultSlides = [
   },
 ];
 
-// Particle animation component
-const ParticleBackground = () => {
-  return (
-    <div className="absolute inset-0 z-0 overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-r from-midnight-600/50 to-midnight-500/40"></div>
-      {Array.from({ length: 60 }).map((_, index) => (
-        <motion.div
-          key={index}
-          className="absolute w-2 h-2 bg-white rounded-full opacity-70"
-          initial={{
-            x: Math.random() * 100 + "%",
-            y: Math.random() * 100 + "%",
-            scale: Math.random() * 0.5 + 0.5,
-            opacity: Math.random() * 0.5 + 0.3,
-          }}
-          animate={{
-            y: [null, "-20%"],
-            opacity: [null, 0],
-          }}
-          transition={{
-            duration: Math.random() * 10 + 10,
-            repeat: Infinity,
-            ease: "linear",
-          }}
-        />
-      ))}
-    </div>
-  );
-};
-
 const HeroSlider: React.FC<HeroSliderProps> = ({ slides = defaultSlides }) => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [api, setApi] = useState<any>(null);
@@ -116,9 +86,6 @@ const HeroSlider: React.FC<HeroSliderProps> = ({ slides = defaultSlides }) => {
                 >
                   {/* Overlay with Gradient */}
                   <div className="absolute inset-0 bg-gradient-to-r from-midnight-600/80 via-midnight-500/70 to-midnight-500/80"></div>
-
-                  {/* Particle Effect */}
-                  <ParticleBackground />
                 </motion.div>
 
                 {/* Content */}
