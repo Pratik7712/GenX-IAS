@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="280" height="560" viewBox="0 0 280 560" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Phone Frame -->
+  <rect width="280" height="560" rx="32" fill="#F8F9FA"/>
+  <rect x="8" y="8" width="264" height="544" rx="28" fill="white"/>
+  
+  <!-- Header -->
+  <rect x="24" y="32" width="232" height="64" rx="16" fill="#00A3E0"/>
+  <text x="52" y="56" font-family="Arial" font-size="18" fill="white">Physics Batch 12</text>
+  <text x="52" y="76" font-family="Arial" font-size="14" fill="white" opacity="0.8">Owner</text>
+  <path d="M40 52L44 56L40 60" stroke="white" stroke-width="2"/>
+  <circle cx="232" cy="52" r="12" stroke="white" stroke-width="2"/>
+  
+  <!-- Tabs -->
+  <g transform="translate(24, 112)">
+    <text x="0" y="24" font-family="Arial" font-size="14" fill="#6C757D">ASSIGNMENTS</text>
+    <text x="120" y="24" font-family="Arial" font-size="14" fill="#00A3E0">ANNOUNCEMENTS</text>
+    <text x="240" y="24" font-family="Arial" font-size="14" fill="#6C757D">TESTS</text>
+    <rect x="120" y="28" width="100" height="2" fill="#00A3E0"/>
+  </g>
+
+  <!-- Search Bar -->
+  <g transform="translate(24, 152)">
+    <rect width="232" height="40" rx="8" fill="#F8F9FA"/>
+    <text x="40" y="26" font-family="Arial" font-size="14" fill="#ADB5BD">Search</text>
+    <path d="M16 20 A8 8 0 1 0 16 36 A8 8 0 1 0 16 20" stroke="#ADB5BD" stroke-width="2" fill="none"/>
+  </g>
+
+  <!-- Empty State -->
+  <g transform="translate(24, 208)">
+    <circle cx="116" cy="40" r="32" fill="#F8F9FA"/>
+    <path d="M104 40 L128 40 M116 28 L116 52" stroke="#ADB5BD" stroke-width="2"/>
+    <text x="40" y="100" font-family="Arial" font-size="14" fill="#6C757D" text-anchor="middle">These are messages you want to</text>
+    <text x="40" y="120" font-family="Arial" font-size="14" fill="#6C757D" text-anchor="middle">send to the entire batch at once</text>
+    
+    <rect x="64" y="140" width="160" height="40" rx="20" fill="#00A3E0"/>
+    <text x="84" y="164" font-family="Arial" font-size="14" fill="white">Make an announcement</text>
+  </g>
+
+  <!-- Announcements -->
+  <g transform="translate(24, 320)">
+    <text x="0" y="24" font-family="Arial" font-size="12" fill="#6C757D">06 JUN 2019</text>
+    <rect x="0" y="40" width="232" height="64" rx="8" fill="#F8F9FA"/>
+    <text x="16" y="64" font-family="Arial" font-size="14" fill="#212529" font-style="italic">Hey class! Bring your practical record book</text>
+    <text x="16" y="84" font-family="Arial" font-size="14" fill="#212529" font-style="italic">tomorrow and get it checked by me. If anyon...</text>
+    <text x="16" y="104" font-family="Arial" font-size="12" fill="#6C757D">by Anurag at 09:42 AM</text>
+
+    <text x="0" y="144" font-family="Arial" font-size="12" fill="#6C757D">05 JUN 2019</text>
+    <rect x="0" y="160" width="232" height="48" rx="8" fill="#F8F9FA"/>
+    <text x="16" y="184" font-family="Arial" font-size="14" fill="#212529" font-style="italic">Tomorrow's class has been cancelled due to</text>
+    <text x="16" y="204" font-family="Arial" font-size="14" fill="#212529" font-style="italic">elections.</text>
+  </g>
+</svg> 

@@ -8,6 +8,7 @@ import BatchesSection from "./home/BatchesSection";
 import FacultySection from "./home/FacultySection";
 import SuccessStoriesSection from "./home/SuccessStoriesSection";
 import GallerySection from "./home/GallerySection";
+import AppSection from "./home/AppSection";
 import ContactSection from "./home/ContactSection";
 
 const Home = () => {
@@ -22,6 +23,7 @@ const Home = () => {
         <FacultySection />
         <SuccessStoriesSection />
         <GallerySection />
+        <AppSection />
         <ContactSection />
       </main>
       <Footer />

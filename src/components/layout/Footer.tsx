@@ -43,7 +43,7 @@ const Footer = () => {
       </div>
 
       <div className="container mx-auto px-4">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
           {/* Logo and About */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -214,6 +214,45 @@ const Footer = () => {
                 </span>
               </li>
             </ul>
+          </motion.div>
+
+          {/* Get the App */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.4 }}
+            viewport={{ once: true }}
+          >
+            <h3 className="text-xl font-semibold mb-5 font-heading">
+              Get the App
+            </h3>
+            <p className="text-gray-100 mb-4">
+              Download our mobile app to access study materials and stay updated with your course progress.
+            </p>
+            <motion.div
+              whileHover={{ scale: 1.05 }}
+              transition={{ duration: 0.3 }}
+            >
+              <a 
+                href="https://play.google.com/store/apps/details?id=co.diy18.pimgg" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="inline-flex"
+              >
+                <div className="bg-black hover:bg-[#0F1923] hover:text-[#ED344C] transition-all duration-300 text-white px-6 py-3 rounded-xl flex items-center gap-3">
+                  <svg width="24" height="24" viewBox="0 0 512 512" className="flex-shrink-0">
+                    <path fill="#EA4335" d="M325.3 234.3L104.6 13l280.8 161.2-60.1 60.1zM47 0C34 6.8 25.3 19.2 25.3 35.3v441.3c0 16.1 8.7 28.5 21.7 35.3l256.6-256L47 0z"/>
+                    <path fill="#34A853" d="M47 512c13 6.8 21.7 6.8 34.7 0L383 321.3l-60.1-60.1L47 512z"/>
+                    <path fill="#4285F4" d="M464 261.3L380.2 214 319.9 274.3l60.3 60.3L464 287.3c18-12 18-38.3 0-48.7z"/>
+                    <path fill="#FBBC04" d="M380.2 214L159.3 52.8l60.1 60.1L380.2 214z"/>
+                  </svg>
+                  <div className="font-sans">
+                    <div className="text-xs tracking-wide opacity-90 font-medium">GET IT ON</div>
+                    <div className="text-sm font-semibold tracking-wide">Google Play</div>
+                  </div>
+                </div>
+              </a>
+            </motion.div>
           </motion.div>
         </div>
 
