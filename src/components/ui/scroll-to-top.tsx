@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { ArrowUp } from "lucide-react";
+import { ChevronUp } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 interface ScrollToTopProps {
@@ -30,17 +30,20 @@ const ScrollToTop: React.FC<ScrollToTopProps> = ({ showBelow = 300 }) => {
     <AnimatePresence>
       {show && (
         <motion.button
-          onClick={handleClick}
-          className="fixed bottom-8 right-8 z-50 p-3 rounded-full bg-crimson-500 text-white shadow-lg"
           initial={{ opacity: 0, scale: 0.5 }}
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0, scale: 0.5 }}
-          whileHover={{ scale: 1.1, backgroundColor: "#D91E35" }}
-          whileTap={{ scale: 0.9 }}
-          transition={{ duration: 0.2 }}
+          transition={{ duration: 0.3 }}
+          onClick={handleClick}
+          className="fixed z-50 bottom-4 right-4 sm:bottom-6 sm:right-6 md:bottom-8 md:right-8 
+                    bg-crimson-500 hover:bg-crimson-600 text-white rounded-full 
+                    p-2 sm:p-3 shadow-lg hover:shadow-xl transition-all duration-300
+                    focus:outline-none focus:ring-2 focus:ring-crimson-400 focus:ring-opacity-50"
           aria-label="Scroll to top"
+          whileHover={{ y: -5 }}
+          whileTap={{ scale: 0.9 }}
         >
-          <ArrowUp className="h-6 w-6" />
+          <ChevronUp className="h-5 w-5 sm:h-6 sm:w-6" />
         </motion.button>
       )}
     </AnimatePresence>

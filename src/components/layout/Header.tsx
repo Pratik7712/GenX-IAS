@@ -10,7 +10,6 @@ import {
   NavigationMenuLink,
   NavigationMenuList,
   NavigationMenuTrigger,
-  navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
 
 interface HeaderProps {
@@ -95,14 +94,15 @@ const Header = ({
     { label: "Gallery", href: "#gallery" },
     { label: "Contact", href: "#contact" },
   ],
-  contactPhone = "7990661375",
+  contactPhone = "+91 7990661375",
   contactEmail = "genxias@gmail.com",
 }: HeaderProps) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [activeSection, setActiveSection] = useState("#home"); // Initialize with #home
+  const [activeSection, setActiveSection] = useState("#home");
+  const [activeSubmenu, setActiveSubmenu] = useState<string | null>(null);
 
-  // Handle scroll event to shrink navbar and update active section
+  // Handle scroll event to update active section
   useEffect(() => {
     const handleScroll = () => {
       const offset = window.scrollY;
@@ -139,7 +139,7 @@ const Header = ({
     return activeSection === href;
   };
 
-  // Add smooth scrolling function and set active section on click
+  // Smooth scrolling function
   const handleSmoothScroll = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     e.preventDefault();
 
@@ -172,30 +172,29 @@ const Header = ({
     }
   };
 
+  // Toggle submenu on mobile
+  const toggleSubmenu = (href: string) => {
+    if (activeSubmenu === href) {
+      setActiveSubmenu(null);
+    } else {
+      setActiveSubmenu(href);
+    }
+  };
+
   return (
-    <motion.header
-      className={`fixed top-0 left-0 right-0 z-50 w-full bg-gradient-to-b from-midnight-600 to-midnight-500 text-white backdrop-blur-sm transition-all duration-300 ${
-        scrolled ? "shadow-lg py-1" : "shadow-md py-3"
+    <header 
+      className={`fixed top-0 left-0 right-0 z-50 w-full bg-midnight-600 text-white transition-all duration-300 ${
+        scrolled ? "shadow-lg py-1" : "shadow-md py-2 sm:py-3"
       }`}
-      initial={{ y: -100 }}
-      animate={{ y: 0 }}
-      transition={{ duration: 0.5 }}
     >
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between">
           {/* Logo */}
-          <motion.div
-            className="flex items-center"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-          >
+          <div className="flex items-center">
             <Link to="/" className="flex items-center">
-              <div
-                className={`overflow-hidden rounded-full border-2 border-crimson-300 p-1 transition-all duration-300 ${
-                  scrolled ? "h-16 w-16" : "h-20 w-20"
-                }`}
-              >
+              <div className={`overflow-hidden rounded-full transition-all duration-300 ${
+                scrolled ? "h-10 w-10 sm:h-12 sm:w-12" : "h-12 w-12 sm:h-16 sm:w-16"
+              }`}>
                 <img
                   src="/GENX IAS LOGO.png"
                   alt="GenX IAS Institute"
@@ -208,224 +207,205 @@ const Header = ({
                 />
               </div>
             </Link>
-          </motion.div>
+          </div>
 
           {/* Desktop Navigation */}
-          <div className="hidden lg:flex lg:items-center lg:space-x-8">
-            <NavigationMenu className="mr-4">
-              <NavigationMenuList className="space-x-2">
-                {menuItems.map((item, index) => {
-                  // If the item has a submenu, render a dropdown
-                  if (item.submenu) {
-                    return (
-                      <NavigationMenuItem
-                        key={index}
-                        className={index === 0 ? "mr-8" : ""}
-                      >
-                        <NavigationMenuTrigger
-                          className={`${
-                            isActive(item.href)
-                              ? "text-[#ED344C] font-semibold"
-                              : "text-white"
-                          } transition-all duration-300 bg-transparent text-[16px] tracking-wide hover:bg-transparent hover:text-[#ED344C]`}
-                        >
-                          {item.label}
-                        </NavigationMenuTrigger>
-                        <NavigationMenuContent>
-                          <motion.div
-                            className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] bg-midnight-600/95 backdrop-blur-sm border border-midnight-400 rounded-lg shadow-xl"
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.3 }}
-                          >
-                            {item.submenu.map((subItem, subIndex) => (
-                              <a
-                                key={subIndex}
-                                href={subItem.href}
-                                onClick={(e) =>
-                                  handleSmoothScroll(e, subItem.href)
-                                }
-                                className={`block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-all duration-300 ${
-                                  isActive(subItem.href)
-                                    ? "text-[#ED344C] font-semibold"
-                                    : "text-white"
-                                } hover:bg-midnight-500/30 hover:text-[#ED344C] !hover:text-[#ED344C] text-[15px]`}
-                              >
-                                <div className="text-[15px] font-medium leading-none">
-                                  {subItem.label}
-                                </div>
-                                {subItem.description && (
-                                  <p className="line-clamp-2 text-sm leading-snug text-gray-300 mt-2">
-                                    {subItem.description}
-                                  </p>
-                                )}
-                              </a>
-                            ))}
-                          </motion.div>
-                        </NavigationMenuContent>
-                      </NavigationMenuItem>
-                    );
-                  }
-
-                  // Otherwise render a simple link
-                  return (
-                    <NavigationMenuItem
-                      key={index}
-                      className={index === 0 ? "mr-8" : ""}
-                    >
-                      <a
-                        href={item.href}
-                        onClick={(e) => handleSmoothScroll(e, item.href)}
-                        className={`${navigationMenuTriggerStyle()} ${
-                          isActive(item.href)
-                            ? "text-[#ED344C] font-semibold"
-                            : "text-white"
-                        } transition-all duration-300 bg-transparent text-[16px] tracking-wide hover:text-[#ED344C] !hover:text-[#ED344C] hover:bg-transparent`}
-                      >
-                        {item.label}
-                      </a>
-                    </NavigationMenuItem>
-                  );
-                })}
-              </NavigationMenuList>
-            </NavigationMenu>
-
-            {/* Contact Info */}
-            <motion.div
-              className="ml-8 flex items-center"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.5, delay: 0.4 }}
-            >
-              <div className="hidden md:flex items-center text-xs text-white mr-4">
-                <Phone className="mr-1 h-3 w-3 text-[#ED344C]" />
-                <span className="truncate">{contactPhone}</span>
-              </div>
-              <motion.div
-                whileHover={{ scale: 1.05, y: -2 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <Button
-                  size="sm"
-                  className="bg-[#ED344C] hover:bg-[#ED344C]/80 shadow-md hover:shadow-lg transition-all duration-300 font-medium"
-                >
-                  <a
-                    href="#contact"
-                    onClick={(e) => handleSmoothScroll(e, "#contact")}
-                    className="text-white flex items-center"
-                  >
-                    <Mail className="mr-1.5 h-3.5 w-3.5" /> Contact Us
-                  </a>
-                </Button>
-              </motion.div>
-            </motion.div>
-          </div>
-
-          {/* Mobile Menu Button */}
-          <div className="lg:hidden">
-            <motion.button
-              className="p-2 rounded-md text-white hover:text-[#ED344C] hover:bg-midnight-700 transition-colors duration-300"
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              aria-label="Toggle menu"
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
-            >
-              {mobileMenuOpen ? (
-                <X className="h-6 w-6" />
-              ) : (
-                <Menu className="h-6 w-6" />
-              )}
-            </motion.button>
-          </div>
-        </div>
-
-        {/* Mobile Menu */}
-        <AnimatePresence>
-          {mobileMenuOpen && (
-            <motion.div
-              className="mt-4 lg:hidden bg-midnight-600/95 backdrop-blur-sm rounded-lg shadow-xl overflow-hidden border border-midnight-400"
-              initial={{ height: 0, opacity: 0 }}
-              animate={{ height: "auto", opacity: 1 }}
-              exit={{ height: 0, opacity: 0 }}
-              transition={{ duration: 0.3 }}
-            >
-              <nav className="flex flex-col space-y-1 p-4">
-                {menuItems.map((item, index) => (
-                  <div
-                    key={index}
-                    className={`py-2 ${index === 0 ? "mb-2" : ""}`}
-                  >
+          <div className="hidden lg:flex lg:items-center lg:space-x-4">
+            {menuItems.map((item, index) => {
+              // If the item has a submenu
+              if (item.submenu) {
+                return (
+                  <div key={index} className="relative group">
                     <a
                       href={item.href}
                       onClick={(e) => handleSmoothScroll(e, item.href)}
-                      className={`block text-[16px] ${
+                      className={`px-3 py-2 inline-block text-[15px] font-medium transition-all duration-300 ${
                         isActive(item.href)
-                          ? "text-[#ED344C] font-semibold"
-                          : "text-white"
-                      } hover:text-[#ED344C] transition-all duration-300 tracking-wide`}
+                          ? "text-crimson-500 font-semibold"
+                          : "text-white hover:text-crimson-300"
+                      }`}
                     >
-                      {item.label}
+                      {item.label} <span className="ml-1">▾</span>
                     </a>
-                    {item.submenu && (
-                      <motion.div
-                        className="ml-4 mt-3 space-y-2"
-                        initial={{ opacity: 0, height: 0 }}
-                        animate={{ opacity: 1, height: "auto" }}
-                        transition={{ duration: 0.3 }}
-                      >
+                    
+                    {/* Dropdown menu */}
+                    <div className="absolute left-0 mt-2 w-56 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50">
+                      <div className="bg-midnight-600/95 backdrop-blur-sm border border-midnight-400 rounded-lg shadow-xl py-2">
                         {item.submenu.map((subItem, subIndex) => (
                           <a
                             key={subIndex}
                             href={subItem.href}
                             onClick={(e) => handleSmoothScroll(e, subItem.href)}
-                            className={`block text-[15px] ${
+                            className={`block px-4 py-2 text-sm ${
                               isActive(subItem.href)
-                                ? "text-[#ED344C] font-semibold"
-                                : "text-gray-300"
-                            } hover:text-[#ED344C] transition-all duration-300`}
+                                ? "text-crimson-500 font-semibold"
+                                : "text-white/90 hover:bg-midnight-500 hover:text-crimson-300"
+                            }`}
                           >
                             {subItem.label}
                           </a>
                         ))}
-                      </motion.div>
-                    )}
+                      </div>
+                    </div>
                   </div>
-                ))}
-              </nav>
-              <div className="border-t border-midnight-400 p-4">
-                <div className="flex flex-col space-y-3">
-                  <div className="flex items-center text-sm text-white">
-                    <Phone className="mr-2 h-4 w-4 text-[#ED344C]" />
-                    <span>{contactPhone}</span>
-                  </div>
-                  <div className="flex items-center text-sm text-white">
-                    <Mail className="mr-2 h-4 w-4 text-[#ED344C]" />
-                    <span>{contactEmail}</span>
-                  </div>
-                  <motion.div
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                  >
-                    <Button
-                      size="sm"
-                      className="mt-2 w-full bg-[#ED344C] hover:bg-[#ED344C]/80 shadow-md transition-all duration-300 font-medium"
-                    >
-                      <a
-                        href="#contact"
-                        onClick={(e) => handleSmoothScroll(e, "#contact")}
-                        className="text-white"
-                      >
-                        Contact Us
-                      </a>
-                    </Button>
-                  </motion.div>
-                </div>
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
+                );
+              }
+
+              // Simple menu item without submenu
+              return (
+                <a
+                  key={index}
+                  href={item.href}
+                  onClick={(e) => handleSmoothScroll(e, item.href)}
+                  className={`px-3 py-2 inline-block text-[15px] font-medium transition-all duration-300 ${
+                    isActive(item.href)
+                      ? "text-crimson-500 font-semibold"
+                      : "text-white hover:text-crimson-300"
+                  }`}
+                >
+                  {item.label}
+                </a>
+              );
+            })}
+          </div>
+
+          {/* Phone number and Contact Button - Desktop */}
+          <div className="hidden lg:flex items-center space-x-4">
+            <a href={`tel:${contactPhone}`} className="flex items-center text-white hover:text-crimson-300 transition-colors">
+              <Phone className="h-4 w-4 mr-2 text-crimson-400" /> {contactPhone}
+            </a>
+            <Button
+              size="sm"
+              className="bg-crimson-500 hover:bg-crimson-600 text-white"
+            >
+              <a
+                href="#contact"
+                onClick={(e) => handleSmoothScroll(e, "#contact")}
+                className="flex items-center"
+              >
+                Contact Us
+              </a>
+            </Button>
+          </div>
+
+          {/* Mobile menu button */}
+          <div className="lg:hidden flex items-center">
+            <button
+              className="p-2 rounded-md text-white hover:bg-midnight-500 transition-colors"
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              aria-label="Toggle menu"
+            >
+              {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+            </button>
+          </div>
+        </div>
       </div>
-    </motion.header>
+
+      {/* Mobile menu */}
+      <AnimatePresence>
+        {mobileMenuOpen && (
+          <motion.div
+            className="lg:hidden bg-midnight-600 overflow-y-auto"
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.3 }}
+          >
+            <div className="px-4 py-5 space-y-3 max-h-[70vh] overflow-y-auto">
+              {menuItems.map((item, index) => (
+                <div key={index} className="border-b border-midnight-400 pb-2">
+                  {item.submenu ? (
+                    <div>
+                      <button
+                        onClick={() => toggleSubmenu(item.href)}
+                        className={`flex justify-between items-center w-full py-2 px-3 rounded-md ${
+                          isActive(item.href) ? "text-crimson-500 font-semibold" : "text-white"
+                        }`}
+                      >
+                        <span>{item.label}</span>
+                        <svg
+                          className={`h-4 w-4 transition-transform ${
+                            activeSubmenu === item.href ? "transform rotate-180" : ""
+                          }`}
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M19 9l-7 7-7-7"
+                          />
+                        </svg>
+                      </button>
+                      
+                      <AnimatePresence>
+                        {activeSubmenu === item.href && (
+                          <motion.div
+                            initial={{ height: 0, opacity: 0 }}
+                            animate={{ height: "auto", opacity: 1 }}
+                            exit={{ height: 0, opacity: 0 }}
+                            transition={{ duration: 0.2 }}
+                            className="pl-4 mt-1 space-y-1"
+                          >
+                            {item.submenu.map((subItem, subIndex) => (
+                              <a
+                                key={subIndex}
+                                href={subItem.href}
+                                onClick={(e) => handleSmoothScroll(e, subItem.href)}
+                                className={`block py-2 px-3 rounded-md ${
+                                  isActive(subItem.href)
+                                    ? "text-crimson-500 font-semibold"
+                                    : "text-white/90 hover:text-crimson-300"
+                                }`}
+                              >
+                                {subItem.label}
+                              </a>
+                            ))}
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </div>
+                  ) : (
+                    <a
+                      href={item.href}
+                      onClick={(e) => handleSmoothScroll(e, item.href)}
+                      className={`block py-2 px-3 rounded-md ${
+                        isActive(item.href)
+                          ? "text-crimson-500 font-semibold"
+                          : "text-white hover:text-crimson-300"
+                      }`}
+                    >
+                      {item.label}
+                    </a>
+                  )}
+                </div>
+              ))}
+              
+              {/* Mobile contact info */}
+              <div className="pt-4 space-y-3">
+                <a href={`tel:${contactPhone}`} className="flex items-center text-white/90 hover:text-white transition-colors px-3 py-2">
+                  <Phone className="h-5 w-5 mr-3 text-crimson-400" /> {contactPhone}
+                </a>
+                <Button
+                  size="sm" 
+                  className="w-full bg-crimson-500 hover:bg-crimson-600 text-white"
+                >
+                  <a
+                    href="#contact"
+                    onClick={(e) => handleSmoothScroll(e, "#contact")}
+                    className="flex items-center justify-center w-full"
+                  >
+                    Contact Us
+                  </a>
+                </Button>
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </header>
   );
 };
 
