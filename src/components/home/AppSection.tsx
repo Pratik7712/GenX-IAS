@@ -64,7 +64,7 @@ const AppSection = () => {
               <div className="relative w-[240px] transform -rotate-12">
                 <div className="bg-white rounded-[2rem] shadow-2xl overflow-hidden">
                   {/* Header */}
-                  <div className="bg-[#00A3E0] text-white p-3">
+                  <div className="bg-[#ED344C] text-white p-3">
                     <div className="flex items-center gap-2">
                       <span>←</span>
                       <span className="text-base">Learning Light</span>
@@ -74,7 +74,7 @@ const AppSection = () => {
                   <div className="flex gap-3 p-3 border-b text-xs">
                     <span className="text-gray-500">MENTS</span>
                     <span className="text-gray-500">ANNOUNCEMENTS</span>
-                    <span className="text-[#00A3E0] border-b-2 border-[#00A3E0]">TESTS</span>
+                    <span className="text-[#ED344C] border-b-2 border-[#ED344C]">TESTS</span>
                     <span className="text-gray-500">VIDEOS</span>
                   </div>
                   {/* Content */}
@@ -118,7 +118,7 @@ const AppSection = () => {
               <div className="relative w-[240px] z-20">
                 <div className="bg-white rounded-[2rem] shadow-2xl overflow-hidden">
                   {/* Header */}
-                  <div className="bg-[#00A3E0] text-white p-3">
+                  <div className="bg-[#ED344C] text-white p-3">
                     <div className="flex items-center gap-2">
                       <span>←</span>
                       <div>
@@ -131,7 +131,7 @@ const AppSection = () => {
                   {/* Tabs */}
                   <div className="flex gap-3 p-3 border-b text-xs">
                     <span className="text-gray-500">ASSIGNMENTS</span>
-                    <span className="text-[#00A3E0] border-b-2 border-[#00A3E0]">ANNOUNCEMENTS</span>
+                    <span className="text-[#ED344C] border-b-2 border-[#ED344C]">ANNOUNCEMENTS</span>
                     <span className="text-gray-500">TESTS</span>
                   </div>
                   {/* Content */}
@@ -141,7 +141,7 @@ const AppSection = () => {
                         📢
                       </div>
                       <p className="text-xs text-gray-500">These are messages you want to send to the entire batch at once</p>
-                      <button className="mt-3 bg-[#00A3E0] text-white px-4 py-1.5 rounded-full text-xs">
+                      <button className="mt-3 bg-[#ED344C] text-white px-4 py-1.5 rounded-full text-xs">
                         Make an announcement
                       </button>
                     </div>
@@ -160,7 +160,7 @@ const AppSection = () => {
               <div className="relative w-[240px] transform rotate-12">
                 <div className="bg-white rounded-[2rem] shadow-2xl overflow-hidden">
                   {/* Header */}
-                  <div className="bg-[#00A3E0] text-white p-3">
+                  <div className="bg-[#ED344C] text-white p-3">
                     <div className="flex items-center gap-2">
                       <span>≡</span>
                       <span className="text-base">Learning Light</span>
@@ -175,7 +175,7 @@ const AppSection = () => {
                           <div className="text-gray-500">{day}</div>
                           <div className={`mt-1 w-6 h-6 flex items-center justify-center rounded-full text-xs
                             ${i === 2 ? 'bg-green-500 text-white' : ''}
-                            ${i === 3 ? 'bg-[#00A3E0] text-white' : ''}
+                            ${i === 3 ? 'bg-[#ED344C] text-white' : ''}
                           `}>
                             {[4, 5, 6, 7, 8, 9, 10][i]}
                           </div>

@@ -44,17 +44,17 @@ const CourseCard = ({
     >
       <Card className="relative h-full overflow-hidden hover:shadow-xl transition-all duration-300 bg-white border-midnight-200">
         {popular && (
-          <div className="absolute top-4 right-4 bg-crimson-500 text-white px-3 py-1 rounded-full text-sm font-medium shadow-lg">
+          <div className="absolute top-4 right-4 bg-crimson-500 text-white px-3 py-1 rounded-full text-sm font-medium shadow-lg z-20">
             Popular
           </div>
         )}
         <CardContent className="p-0 flex flex-col h-full">
-          <div className="relative h-48 overflow-hidden">
-            <div className="absolute inset-0 bg-gradient-to-t from-midnight-600/60 to-transparent z-10"></div>
+          <div className="relative h-60 overflow-hidden bg-gray-50 flex items-center justify-center">
+            <div className="absolute inset-0 bg-gradient-to-t from-midnight-600/20 to-transparent z-10"></div>
             <img
               src={image}
               alt={title}
-              className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
+              className="w-4/5 h-auto object-contain transition-transform duration-300 hover:scale-105"
             />
           </div>
           <div className="p-6 flex flex-col flex-grow">
@@ -115,7 +115,7 @@ const CoursesSection = () => {
         "One-on-one mentoring sessions",
         "Study materials included",
       ],
-      image: "https://images.unsplash.com/photo-1571260899304-425eee4c7efc?w=500&q=80",
+      image: "/UPSC_GenX.png",
       popular: true,
     },
     {
@@ -129,7 +129,7 @@ const CoursesSection = () => {
         "Weekly tests and discussions",
         "Personality development sessions",
       ],
-      image: "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=500&q=80",
+      image: "/GPSC_GenX.png",
     },
     {
       title: "UPSC Interview Preparation",
@@ -142,7 +142,7 @@ const CoursesSection = () => {
         "Current affairs discussions",
         "Detailed feedback after each session",
       ],
-      image: "https://images.unsplash.com/photo-1507537297725-24a1c029d3ca?w=500&q=80",
+      image: "/UPSC_GenX.png",
     },
     {
       title: "UPSC Optional Subject",
@@ -155,7 +155,7 @@ const CoursesSection = () => {
         "One-on-one doubt clearing sessions",
         "Previous year questions analysis",
       ],
-      image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=500&q=80",
+      image: "/UPSC_GenX.png",
     },
   ];
 

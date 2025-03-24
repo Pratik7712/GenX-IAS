@@ -39,27 +39,31 @@ const Profile = ({
   imageUrl = "https://api.dicebear.com/7.x/avataaars/svg?seed=default",
 }: ProfileProps) => {
   return (
-    <div className="flex flex-col md:flex-row gap-6 items-center md:items-start">
-      <div className="w-32 h-32 overflow-hidden rounded-full shadow-md border-2 border-gray-100 flex-shrink-0">
-        <OptimizedImage
-          src={imageUrl}
-          alt={`${name} - ${role}`}
-          width={128}
-          height={128}
-          quality={85}
-          blurEffect={true}
-          priority={false}
-          className="w-full h-full"
-          imgClassName="object-cover w-full h-full"
-          role="profile"
-        />
-      </div>
-      <div className="flex-1 text-center md:text-left">
-        <h4 className="text-xl font-semibold text-midnight-600">{name}</h4>
-        <p className="text-crimson-500 font-medium mb-3">{role}</p>
-        <p className="text-gray-700 leading-relaxed">{bio}</p>
-      </div>
-    </div>
+    <Card className="overflow-hidden bg-white border-midnight-200 hover:shadow-xl transition-all duration-300">
+      <CardContent className="p-0">
+        <div className="flex flex-col md:flex-row">
+          <div className="md:w-1/3 overflow-hidden">
+            <OptimizedImage
+              src={imageUrl}
+              alt={`${name} - ${role}`}
+              width={300}
+              height={300}
+              quality={85}
+              blurEffect={true}
+              priority={false}
+              className="w-full h-full"
+              imgClassName="object-cover w-full h-full max-h-[300px]"
+              role="profile"
+            />
+          </div>
+          <div className="md:w-2/3 p-6 flex flex-col justify-center">
+            <h4 className="text-xl font-semibold text-midnight-600">{name}</h4>
+            <p className="text-crimson-500 font-medium mb-3">{role}</p>
+            <p className="text-gray-700 leading-relaxed">{bio}</p>
+          </div>
+        </div>
+      </CardContent>
+    </Card>
   );
 };
 
@@ -203,14 +207,14 @@ const AboutSection = ({
           </motion.div>
         </div>
 
-        {/* Unified About Section - Modernized Design */}
+        {/* Improved About Section Card */}
         <div className="mb-16">
           <Card className="overflow-hidden border-none shadow-lg bg-white">
-            <CardContent className="p-6">
-              <div className="grid md:grid-cols-2 gap-8">
-                <div>
-                  <h3 className="text-xl font-bold text-midnight-600 mb-3">
-                    About GenX IAS
+            <CardContent className="p-0">
+              <div className="grid md:grid-cols-2">
+                <div className="p-8">
+                  <h3 className="text-2xl font-bold text-midnight-600 mb-3">
+                    Our Mission
                   </h3>
                   <div className="w-16 h-1 bg-crimson-500 mb-4"></div>
                   
@@ -218,9 +222,10 @@ const AboutSection = ({
                     {visionMission}
                   </p>
                   
-                  <p className="text-gray-700 text-sm md:text-base mb-6">
-                    {overview}
-                  </p>
+                  <h3 className="text-2xl font-bold text-midnight-600 mb-3 mt-6">
+                    What We Offer
+                  </h3>
+                  <div className="w-16 h-1 bg-crimson-500 mb-4"></div>
 
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <div className="bg-gradient-to-br from-midnight-50 to-gray-100 p-3 rounded-lg shadow-sm border border-midnight-100/30 transition-transform hover:scale-105 duration-300">
@@ -254,9 +259,13 @@ const AboutSection = ({
                       </div>
                     </div>
                   </div>
+                  
+                  <p className="text-gray-700 text-sm md:text-base mt-6">
+                    {overview}
+                  </p>
                 </div>
                 
-                <div className="flex justify-center items-center">
+                <div className="bg-gradient-to-br from-midnight-100/30 to-gray-50 flex justify-center items-center p-8">
                   <div className="rounded-lg overflow-hidden shadow-md transform transition-all duration-500 hover:shadow-xl max-w-sm">
                     <OptimizedImage
                       src="/GenxMap.jpg"
@@ -286,24 +295,29 @@ const AboutSection = ({
           </Card>
         </div>
 
-        {/* Director's Desk Section */}
-        <div className="bg-white py-12 px-6 rounded-xl shadow-lg mb-8">
+        {/* Director's Desk Section - Horizontal Layout with Facing Images */}
+        <div className="mb-8">
           <h3 className="text-2xl md:text-3xl font-bold text-midnight-600 mb-8 text-center">
             Director's Desk
           </h3>
-          <div className="grid grid-cols-1 gap-8 max-w-2xl mx-auto">
-            <Profile
-              name={founderProfile.name}
-              role={founderProfile.role}
-              bio={founderProfile.bio}
-              imageUrl={founderProfile.imageUrl}
-            />
-            <Profile
-              name={directorProfile.name}
-              role={directorProfile.role}
-              bio={directorProfile.bio}
-              imageUrl={directorProfile.imageUrl}
-            />
+          <div className="grid grid-cols-1 gap-8">
+            <div className="grid md:grid-cols-2 gap-8">
+              {/* Founder Profile */}
+              <Profile
+                name={founderProfile.name}
+                role={founderProfile.role}
+                bio={founderProfile.bio}
+                imageUrl={founderProfile.imageUrl}
+              />
+              
+              {/* Director Profile */}
+              <Profile
+                name={directorProfile.name}
+                role={directorProfile.role}
+                bio={directorProfile.bio}
+                imageUrl={directorProfile.imageUrl}
+              />
+            </div>
           </div>
         </div>
       </div>
