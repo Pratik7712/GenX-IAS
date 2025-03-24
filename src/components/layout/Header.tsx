@@ -36,9 +36,9 @@ const Header = ({
       href: "#about",
       submenu: [
         {
-          label: "Institute Overview",
+          label: "Overview",
           href: "#overview",
-          description: "Learn about our institute and its history",
+          description: "Learn about GenX IAS and its history",
         },
         {
           label: "Vision & Mission",
@@ -197,7 +197,7 @@ const Header = ({
               }`}>
                 <img
                   src="/GENX IAS LOGO.png"
-                  alt="GenX IAS Institute"
+                  alt="GenX IAS"
                   className="h-full w-full object-cover transition-transform duration-300 hover:scale-105"
                   onError={(e) => {
                     const target = e.target as HTMLImageElement;

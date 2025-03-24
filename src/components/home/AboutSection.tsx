@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Card, CardContent } from "../ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { motion } from "framer-motion";
-import { fadeIn, fadeInUp, staggerContainer } from "@/lib/animations";
+import { fadeIn, fadeInUp } from "@/lib/animations";
 import { Check, BookOpen, ClipboardCheck, MapPin } from "lucide-react";
+import { Skeleton } from "../ui/skeleton";
+import OptimizedImage from '../OptimizedImage';
 
 interface ProfileProps {
   name: string;
@@ -12,6 +14,24 @@ interface ProfileProps {
   imageUrl: string;
 }
 
+// Profile Card Skeleton Component
+const ProfileSkeleton = () => {
+  return (
+    <Card className="overflow-hidden bg-white border-midnight-200 h-full">
+      <CardContent className="p-6">
+        <div className="flex flex-col items-center text-center">
+          <Skeleton className="h-36 w-36 rounded-full mb-5" />
+          <Skeleton className="h-6 w-48 mb-2" />
+          <Skeleton className="h-4 w-36 mb-4" />
+          <Skeleton className="h-4 w-full mb-2" />
+          <Skeleton className="h-4 w-full mb-2" />
+          <Skeleton className="h-4 w-3/4" />
+        </div>
+      </CardContent>
+    </Card>
+  );
+};
+
 const Profile = ({
   name = "John Doe",
   role = "Role",
@@ -19,43 +39,112 @@ const Profile = ({
   imageUrl = "https://api.dicebear.com/7.x/avataaars/svg?seed=default",
 }: ProfileProps) => {
   return (
-    <motion.div
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true }}
-      variants={fadeInUp}
-    >
-      <Card className="overflow-hidden bg-white border-midnight-200 hover:shadow-xl transition-all duration-300 h-full">
-        <CardContent className="p-6">
-          <div className="flex flex-col items-center text-center">
-            <Avatar className="h-36 w-36 mb-5 border-2 border-crimson-500 shadow-lg">
-              <AvatarImage src={imageUrl} alt={name} style={{ objectFit: 'contain' }} />
-              <AvatarFallback className="bg-midnight-100 text-midnight-600">
-                {name.charAt(0)}
-              </AvatarFallback>
-            </Avatar>
-            <h3 className="text-2xl font-bold text-midnight-600 mb-1">
-              {name}
-            </h3>
-            <p className="text-crimson-500 font-medium mb-4">{role}</p>
-            <p className="text-gray-600 leading-relaxed">{bio}</p>
-          </div>
-        </CardContent>
-      </Card>
-    </motion.div>
+    <div className="flex flex-col md:flex-row gap-6 items-center md:items-start">
+      <div className="w-32 h-32 overflow-hidden rounded-full shadow-md border-2 border-gray-100 flex-shrink-0">
+        <OptimizedImage
+          src={imageUrl}
+          alt={`${name} - ${role}`}
+          width={128}
+          height={128}
+          quality={85}
+          blurEffect={true}
+          priority={false}
+          className="w-full h-full"
+          imgClassName="object-cover w-full h-full"
+          role="profile"
+        />
+      </div>
+      <div className="flex-1 text-center md:text-left">
+        <h4 className="text-xl font-semibold text-midnight-600">{name}</h4>
+        <p className="text-crimson-500 font-medium mb-3">{role}</p>
+        <p className="text-gray-700 leading-relaxed">{bio}</p>
+      </div>
+    </div>
+  );
+};
+
+// About Section Content Skeleton
+const AboutSectionSkeleton = () => {
+  return (
+    <div className="container mx-auto px-4">
+      <div className="text-center mb-12">
+        <Skeleton className="h-10 w-64 mx-auto mb-3" />
+        <div className="w-24 h-1 bg-gray-200 mx-auto mb-6"></div>
+        <Skeleton className="h-5 w-full max-w-3xl mx-auto" />
+      </div>
+
+      {/* About Section Card Skeleton */}
+      <div className="mb-16">
+        <Card className="overflow-hidden border-none shadow-md bg-white">
+          <CardContent className="p-8">
+            <div className="grid md:grid-cols-1 lg:grid-cols-2 gap-8">
+              <div>
+                <Skeleton className="h-8 w-48 mb-4" />
+                <Skeleton className="w-16 h-1 mb-6" />
+                
+                <Skeleton className="h-4 w-full mb-2" />
+                <Skeleton className="h-4 w-full mb-2" />
+                <Skeleton className="h-4 w-3/4 mb-6" />
+                
+                <Skeleton className="h-4 w-full mb-2" />
+                <Skeleton className="h-4 w-full mb-2" />
+                <Skeleton className="h-4 w-3/4 mb-6" />
+
+                <div className="flex flex-wrap gap-6 mb-6">
+                  <div className="flex-1 min-w-[250px] p-4 bg-gray-100 rounded-lg">
+                    <div className="flex items-center">
+                      <Skeleton className="w-14 h-14 rounded-full mr-4" />
+                      <Skeleton className="h-5 w-32" />
+                    </div>
+                  </div>
+                  <div className="flex-1 min-w-[250px] p-4 bg-gray-100 rounded-lg">
+                    <div className="flex items-center">
+                      <Skeleton className="w-14 h-14 rounded-full mr-4" />
+                      <Skeleton className="h-5 w-32" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="flex justify-center items-center">
+                <div className="rounded-lg overflow-hidden w-full">
+                  <Skeleton className="w-full aspect-[4/3]" />
+                  <div className="bg-gray-100 p-4">
+                    <div className="flex items-center justify-center mb-2">
+                      <Skeleton className="h-5 w-5 mr-2 rounded-full" />
+                      <Skeleton className="h-5 w-32" />
+                    </div>
+                    <Skeleton className="h-4 w-3/4 mx-auto" />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+
+      {/* Director's Desk Skeleton */}
+      <div className="bg-white py-12 px-6 rounded-xl shadow-md mb-8">
+        <Skeleton className="h-8 w-48 mx-auto mb-8" />
+        <div className="grid grid-cols-1 gap-8 max-w-2xl mx-auto">
+          <ProfileSkeleton />
+          <ProfileSkeleton />
+        </div>
+      </div>
+    </div>
   );
 };
 
 interface AboutSectionProps {
   visionMission?: string;
-  academyOverview?: string;
+  overview?: string;
   founderProfile?: ProfileProps;
   directorProfile?: ProfileProps;
 }
 
 const AboutSection = ({
-  visionMission = "Our vision is to be the premier academy for civil services preparation, empowering aspirants to achieve excellence through quality education, personalized guidance, and comprehensive study materials. We are committed to nurturing future leaders who will serve the nation with integrity and dedication.",
-  academyOverview = "GenX IAS is a leading coaching academy dedicated to preparing students for UPSC, GPSC, and other competitive examinations. With state-of-the-art facilities, experienced faculty, and a proven track record of success, we provide comprehensive coaching programs tailored to meet the needs of civil service aspirants.",
+  visionMission = "Our vision is to be the premier center for civil services preparation, empowering aspirants to achieve excellence through quality education, personalized guidance, and comprehensive study materials. We are committed to nurturing future leaders who will serve the nation with integrity and dedication.",
+  overview = "GenX IAS is a leading coaching center dedicated to preparing students for UPSC, GPSC, and other competitive examinations. With state-of-the-art facilities, experienced faculty, and a proven track record of success, we provide comprehensive coaching programs tailored to meet the needs of civil service aspirants.",
   founderProfile = {
     name: "Mr. Shubham Pandey",
     role: "Founder",
@@ -66,43 +155,29 @@ const AboutSection = ({
   directorProfile = {
     name: "Ms. Shradhha Solanki",
     role: "Managing Director",
-    bio: "Ms. Shradhha Solanki brings her expertise in educational management to GenX IAS. Her strategic leadership and commitment to excellence have been instrumental in establishing the academy as a premier destination for civil services preparation.",
+    bio: "Ms. Shradhha Solanki brings her expertise in educational management to GenX IAS. Her strategic leadership and commitment to excellence have been instrumental in establishing GenX IAS as a premier destination for civil services preparation.",
     imageUrl:
       "/Shradhha Solanki.jpg",
   },
 }: AboutSectionProps) => {
-  const textAnimation = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.08,
-      }
-    }
-  };
+  const [isLoading, setIsLoading] = useState(true);
 
-  const letterAnimation = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.4
-      }
-    }
-  };
+  useEffect(() => {
+    // Reduced loading time for better performance
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 500);
 
-  const animateText = (text: string) => {
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (isLoading) {
     return (
-      <motion.div variants={textAnimation} className="inline-block">
-        {text.split("").map((char, index) => (
-          <motion.span key={index} variants={letterAnimation} className="inline-block">
-            {char}
-          </motion.span>
-        ))}
-      </motion.div>
+      <section id="about" className="py-20 bg-gradient-to-b from-midnight-50 to-gray-50">
+        <AboutSectionSkeleton />
+      </section>
     );
-  };
+  }
 
   return (
     <section
@@ -112,10 +187,10 @@ const AboutSection = ({
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
           <motion.div
-            initial="hidden"
-            whileInView="visible"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            variants={fadeInUp}
+            transition={{ duration: 0.3 }}
           >
             <h2 className="text-3xl md:text-4xl font-bold text-midnight-600 mb-3">
               About GenX IAS
@@ -128,88 +203,84 @@ const AboutSection = ({
           </motion.div>
         </div>
 
-        {/* Unified About Section */}
+        {/* Unified About Section - Modernized Design */}
         <div className="mb-16">
-          <Card className="overflow-hidden border-none shadow-2xl bg-white">
-            <CardContent className="p-8">
-              <div className="grid md:grid-cols-1 lg:grid-cols-2 gap-8">
-                <motion.div
-                  initial="hidden"
-                  whileInView="visible"
-                  viewport={{ once: true }}
-                  variants={fadeInUp}
-                >
-                  <h3 className="text-2xl font-bold text-midnight-600 mb-4">
-                    {animateText("About Our Academy")}
+          <Card className="overflow-hidden border-none shadow-lg bg-white">
+            <CardContent className="p-6">
+              <div className="grid md:grid-cols-2 gap-8">
+                <div>
+                  <h3 className="text-xl font-bold text-midnight-600 mb-3">
+                    About GenX IAS
                   </h3>
-                  <div className="w-16 h-1 bg-crimson-500 mb-6"></div>
+                  <div className="w-16 h-1 bg-crimson-500 mb-4"></div>
                   
-                  <p className="text-gray-700 leading-relaxed mb-6">
+                  <p className="text-gray-700 text-sm md:text-base mb-4">
                     {visionMission}
                   </p>
                   
-                  <p className="text-gray-700 leading-relaxed mb-6">
-                    {academyOverview}
+                  <p className="text-gray-700 text-sm md:text-base mb-6">
+                    {overview}
                   </p>
 
-                  <div className="flex flex-wrap gap-6 mb-6">
-                    <div className="flex-1 min-w-[250px] items-center bg-midnight-50 p-4 rounded-lg shadow-sm hover:shadow-md transition-all duration-300 border border-midnight-100">
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div className="bg-gradient-to-br from-midnight-50 to-gray-100 p-3 rounded-lg shadow-sm border border-midnight-100/30 transition-transform hover:scale-105 duration-300">
                       <div className="flex items-center">
-                        <div className="w-14 h-14 bg-midnight-100 rounded-full flex items-center justify-center mr-4 text-crimson-500">
-                          <Check className="h-7 w-7" />
+                        <div className="w-12 h-12 bg-midnight-600/10 rounded-full flex items-center justify-center mr-3 text-crimson-500">
+                          <Check className="h-6 w-6" />
                         </div>
-                        <span className="text-midnight-600 font-medium">
+                        <span className="text-midnight-600 font-medium text-sm">
                           Expert Faculty
                         </span>
                       </div>
                     </div>
-                    <div className="flex-1 min-w-[250px] items-center bg-midnight-50 p-4 rounded-lg shadow-sm hover:shadow-md transition-all duration-300 border border-midnight-100">
+                    <div className="bg-gradient-to-br from-midnight-50 to-gray-100 p-3 rounded-lg shadow-sm border border-midnight-100/30 transition-transform hover:scale-105 duration-300">
                       <div className="flex items-center">
-                        <div className="w-14 h-14 bg-midnight-100 rounded-full flex items-center justify-center mr-4 text-crimson-500">
-                          <BookOpen className="h-7 w-7" />
+                        <div className="w-12 h-12 bg-midnight-600/10 rounded-full flex items-center justify-center mr-3 text-crimson-500">
+                          <BookOpen className="h-6 w-6" />
                         </div>
-                        <span className="text-midnight-600 font-medium">
-                          Comprehensive Study Material
+                        <span className="text-midnight-600 font-medium text-sm">
+                          Study Material
                         </span>
                       </div>
                     </div>
-                    <div className="flex-1 min-w-[250px] items-center bg-midnight-50 p-4 rounded-lg shadow-sm hover:shadow-md transition-all duration-300 border border-midnight-100">
+                    <div className="bg-gradient-to-br from-midnight-50 to-gray-100 p-3 rounded-lg shadow-sm border border-midnight-100/30 transition-transform hover:scale-105 duration-300">
                       <div className="flex items-center">
-                        <div className="w-14 h-14 bg-midnight-100 rounded-full flex items-center justify-center mr-4 text-crimson-500">
-                          <ClipboardCheck className="h-7 w-7" />
+                        <div className="w-12 h-12 bg-midnight-600/10 rounded-full flex items-center justify-center mr-3 text-crimson-500">
+                          <ClipboardCheck className="h-6 w-6" />
                         </div>
-                        <span className="text-midnight-600 font-medium">
-                          Regular Test Series
+                        <span className="text-midnight-600 font-medium text-sm">
+                          Test Series
                         </span>
                       </div>
                     </div>
                   </div>
-                </motion.div>
+                </div>
                 
-                <motion.div
-                  initial="hidden"
-                  whileInView="visible"
-                  viewport={{ once: true }}
-                  variants={fadeInUp}
-                  className="flex justify-center items-center"
-                >
-                  <div className="rounded-lg overflow-hidden shadow-xl">
-                    <img
+                <div className="flex justify-center items-center">
+                  <div className="rounded-lg overflow-hidden shadow-md transform transition-all duration-500 hover:shadow-xl max-w-sm">
+                    <OptimizedImage
                       src="/GenxMap.jpg"
                       alt="GenX IAS Locations"
-                      className="w-full h-auto"
+                      width={400}
+                      height={300}
+                      quality={80}
+                      priority={false}
+                      blurEffect={true}
+                      className="w-full h-full"
+                      imgClassName="w-full h-auto object-cover"
+                      role="gallery"
                     />
-                    <div className="bg-midnight-600 text-white p-4 text-center">
-                      <div className="flex items-center justify-center mb-2">
-                        <MapPin className="h-5 w-5 mr-2 text-crimson-500" />
-                        <span className="font-medium">Our Branches</span>
+                    <div className="bg-gradient-to-r from-midnight-700 to-midnight-600 text-white p-3 text-center">
+                      <div className="flex items-center justify-center mb-1">
+                        <MapPin className="h-4 w-4 mr-2 text-crimson-400" />
+                        <span className="font-medium text-sm">Our Branches</span>
                       </div>
-                      <p className="text-sm text-gray-300">
+                      <p className="text-xs text-gray-200">
                         Serving aspirants across multiple locations in Gujarat
                       </p>
                     </div>
                   </div>
-                </motion.div>
+                </div>
               </div>
             </CardContent>
           </Card>

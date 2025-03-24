@@ -4,12 +4,14 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "tsc ; vite build",
-    "build-no-errors": "tsc ; vite build",
+    "dev": "node scripts/optimize-images.js && vite",
+    "build": "node scripts/optimize-images.js && tsc && vite build",
+    "build-no-errors": "tsc && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
-    "types:supabase": "npx supabase gen types typescript --project-id $SUPABASE_PROJECT_ID > src/types/supabase.ts"
+    "types:supabase": "npx supabase gen types typescript --project-id $SUPABASE_PROJECT_ID > src/types/supabase.ts",
+    "optimize-images": "node scripts/optimize-images.js",
+    "optimize-image": "node scripts/optimize-on-demand.js"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.6.0",
@@ -48,6 +50,7 @@
     "embla-carousel-react": "^8.1.5",
     "framer-motion": "^11.18.2",
     "lucide-react": "^0.394.0",
+    "next-cloudinary": "^6.16.0",
     "react": "^18.2.0",
     "react-day-picker": "^8.10.1",
     "react-dom": "^18.2.0",
@@ -55,6 +58,7 @@
     "react-resizable-panels": "^2.0.19",
     "react-router": "^6.23.1",
     "react-router-dom": "^6.23.1",
+    "sharp": "^0.33.5",
     "tailwind-merge": "^2.3.0",
     "tailwindcss-animate": "^1.0.7",
     "vaul": "^0.9.1",

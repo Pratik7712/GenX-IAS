@@ -53,7 +53,7 @@ const Footer = () => {
             className="sm:col-span-2 lg:col-span-1"
           >
             <h2 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4 font-heading">
-              GenX IAS Institute
+              GenX IAS
             </h2>
             <p className="mb-4 sm:mb-6 text-gray-100 text-sm sm:text-base">
               Empowering aspirants to achieve excellence in civil services
@@ -262,7 +262,7 @@ const Footer = () => {
         </div>
 
         <div className="border-t border-midnight-400 mt-8 sm:mt-10 md:mt-12 pt-6 sm:pt-8 text-center text-gray-100">
-          <p className="text-sm">&copy; {currentYear} GenX IAS Institute. All rights reserved.</p>
+          <p className="text-sm">&copy; {currentYear} GenX IAS. All rights reserved.</p>
         </div>
       </div>
 

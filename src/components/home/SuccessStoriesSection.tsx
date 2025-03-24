@@ -1,132 +1,86 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { fadeIn, fadeInUp } from "@/lib/animations";
 import { Card, CardContent } from "../ui/card";
-import { Quote, Star } from "lucide-react";
+import { Quote, ChevronLeft, ChevronRight } from "lucide-react";
 
-interface SuccessStoryProps {
+interface TestimonialProps {
   name: string;
-  exam: string;
-  rank: string;
-  batch: string;
-  testimonial: string;
-  image: string;
+  text: string;
 }
 
-const SuccessStory = ({
-  name,
-  exam,
-  rank,
-  batch,
-  testimonial,
-  image,
-}: SuccessStoryProps) => {
+const Testimonial = ({ name, text }: TestimonialProps) => {
   return (
-    <motion.div
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true }}
-      variants={fadeInUp}
-      className="h-full"
-    >
-      <Card className="h-full overflow-hidden transition-all duration-300 hover:shadow-xl border-midnight-200 bg-white">
-        <CardContent className="p-6">
-          <div className="flex flex-col h-full">
-            <div className="flex items-center mb-4">
-              <div className="relative w-16 h-16 mr-4">
-                <img
-                  src={image}
-                  alt={name}
-                  className="w-full h-full object-cover rounded-full shadow-md border-2 border-crimson-500"
-                />
-              </div>
-              <div>
-                <h3 className="text-lg font-bold text-midnight-600">{name}</h3>
-                <div className="flex flex-col">
-                  <span className="text-sm text-gray-600">
-                    <span className="font-medium">{exam}</span> - Rank {rank}
-                  </span>
-                  <span className="text-xs text-crimson-500">Batch: {batch}</span>
-                </div>
-              </div>
-            </div>
-
-            <div className="relative flex-grow mb-4">
-              <Quote className="h-8 w-8 text-midnight-100 absolute -top-1 -left-1" />
-              <p className="text-gray-700 italic pl-6 relative z-10">{testimonial}</p>
-            </div>
-
-            <div className="flex text-yellow-500 mt-auto">
-              <Star className="h-5 w-5 fill-current" />
-              <Star className="h-5 w-5 fill-current" />
-              <Star className="h-5 w-5 fill-current" />
-              <Star className="h-5 w-5 fill-current" />
-              <Star className="h-5 w-5 fill-current" />
-            </div>
+    <Card className="h-full overflow-hidden shadow-md bg-white border-midnight-100">
+      <CardContent className="p-6">
+        <div className="flex flex-col h-full">
+          <div className="relative flex-grow mb-4">
+            <Quote className="h-8 w-8 text-crimson-200 absolute -top-1 -left-1" />
+            <p className="text-gray-700 italic pl-6 relative z-10 mb-4">{text}</p>
           </div>
-        </CardContent>
-      </Card>
-    </motion.div>
+          
+          <div className="mt-auto">
+            <h3 className="text-lg font-bold text-midnight-600">{name}</h3>
+          </div>
+        </div>
+      </CardContent>
+    </Card>
   );
 };
 
 const SuccessStoriesSection = () => {
-  const successStories: SuccessStoryProps[] = [
+  const [activeSlide, setActiveSlide] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
+
+  const testimonials: TestimonialProps[] = [
     {
-      name: "Ananya Sharma",
-      exam: "UPSC CSE",
-      rank: "45",
-      batch: "2020-21",
-      testimonial:
-        "GenX IAS Institute played a crucial role in my UPSC journey. The structured approach, comprehensive study material, and personal mentoring helped me secure a top rank.",
-      image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&q=80",
+      name: "Abhishek Garg",
+      text: "I highly recommend GenX IAS for its exceptional quality of education. In my experience, it stands out as a premier institution, offering best and updated knowledge, aligned with industry standards. Outstanding faculty, comprising highly qualified and experienced professionals. Supportive environment, fostering academic growth and success. Affordable pricing, making quality education accessible to all. Best place to gain quality education."
     },
     {
-      name: "Rahul Patel",
-      exam: "GPSC Class 1-2",
-      rank: "12",
-      batch: "2020-21",
-      testimonial:
-        "The faculty at GenX IAS are exceptional. Their guidance and test series were instrumental in my success. I'm grateful for their constant support throughout my preparation.",
-      image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&q=80",
+      name: "Chaudhary Anurag",
+      text: "The teachers are very supportive and all concepts are explained in detail. Good atmosphere to stay and do self study. Highly recommend to consider GenX IAS for your desired job preparation."
     },
     {
-      name: "Priya Desai",
-      exam: "UPSC CSE",
-      rank: "87",
-      batch: "2019-20",
-      testimonial:
-        "What sets GenX IAS apart is their personalized attention to each student. The mock interviews and answer writing sessions significantly improved my performance.",
-      image: "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=400&q=80",
+      name: "Akansha Tripathi",
+      text: "GenX IAS is undoubtedly the center that works on shaping futures on truths and quality knowledge rather than on fake motivation. Personally, a big thanks to the faculty for making me settle comfortably with the new environment very easily within a month's time."
     },
     {
-      name: "Vikram Mehra",
-      exam: "UPSC CSE",
-      rank: "134",
-      batch: "2019-20",
-      testimonial:
-        "I joined GenX IAS after attempting UPSC twice. Their strategic guidance and focused approach helped me clear the exam in my third attempt. Eternally thankful!",
-      image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&q=80",
+      name: "Divyesh Pagi",
+      text: "GenX IAS is one of the best centers of Ahemdabad for GPSC and UPSC as they provide the best guidance for competitive exams. A special mention goes to Shubham sir, who has a very deep knowledge of all the subjects and has a very effective teaching method as well. GenX IAS provides the best atmosphere for preparation."
     },
     {
-      name: "Sneha Joshi",
-      exam: "GPSC Class 1-2",
-      rank: "8",
-      batch: "2021-22",
-      testimonial:
-        "The current affairs sessions and Gujarat-specific material at GenX IAS gave me an edge in the GPSC examination. Highly recommend their specialized batches.",
-      image: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=400&q=80",
+      name: "Yug Barot",
+      text: "GenX IAS is the best for UPSC and GPSC. The faculties of teachers are best and helpful to students to achieve dreams easily. The fees are very reasonable compared to other places. GenX IAS is not for making money it is for making future officers. Shubham Sir gives positive vibes and provides solutions to all problems."
     },
     {
-      name: "Arjun Singh",
-      exam: "UPSC CSE",
-      rank: "156",
-      batch: "2020-21",
-      testimonial:
-        "From day one, GenX IAS instilled confidence in me. Their methodical approach to the vast UPSC syllabus and regular feedback mechanism were game-changers.",
-      image: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=400&q=80",
-    },
+      name: "Aditya Singh",
+      text: "Best place for GPSC and UPSC. The teachers are very supportive and friendly in nature. Among them, Shubham sir's teaching skill is outstanding. Fees is very reasonable compared to other institutions."
+    }
   ];
+
+  // Auto-rotate slides
+  useEffect(() => {
+    if (!isPaused) {
+      const interval = setInterval(() => {
+        setActiveSlide((prev) => (prev + 1) % testimonials.length);
+      }, 5000); // Change slide every 5 seconds
+      
+      return () => clearInterval(interval);
+    }
+  }, [isPaused, testimonials.length]);
+
+  const goToSlide = (index: number) => {
+    setActiveSlide(index);
+  };
+
+  const nextSlide = () => {
+    setActiveSlide((prev) => (prev + 1) % testimonials.length);
+  };
+
+  const prevSlide = () => {
+    setActiveSlide((prev) => (prev - 1 + testimonials.length) % testimonials.length);
+  };
 
   return (
     <section id="success-stories" className="py-20 bg-gray-50">
@@ -143,15 +97,62 @@ const SuccessStoriesSection = () => {
           </h2>
           <div className="w-24 h-1 bg-crimson-500 mx-auto mb-6"></div>
           <p className="text-gray-600 max-w-3xl mx-auto">
-            Our students' achievements speak volumes about our coaching quality.
-            Here are some of our star performers who've made us proud.
+            Hear from our students about their experience with GenX IAS.
+            Their words speak volumes about our dedication to excellence.
           </p>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {successStories.map((story, index) => (
-            <SuccessStory key={index} {...story} />
-          ))}
+        {/* Testimonial Slider */}
+        <div className="relative max-w-4xl mx-auto"
+             onMouseEnter={() => setIsPaused(true)}
+             onMouseLeave={() => setIsPaused(false)}>
+          
+          {/* Slides */}
+          <div className="relative h-[300px] md:h-[250px] overflow-hidden">
+            {testimonials.map((testimonial, index) => (
+              <div key={index} 
+                   className={`absolute inset-0 transition-all duration-500 transform ${
+                     index === activeSlide 
+                       ? "opacity-100 translate-x-0" 
+                       : index < activeSlide 
+                         ? "opacity-0 -translate-x-full" 
+                         : "opacity-0 translate-x-full"
+                   }`}>
+                <Testimonial name={testimonial.name} text={testimonial.text} />
+              </div>
+            ))}
+          </div>
+          
+          {/* Navigation arrows */}
+          <button 
+            onClick={prevSlide}
+            className="absolute top-1/2 left-0 transform -translate-y-1/2 -translate-x-6 md:-translate-x-12 bg-white p-2 rounded-full shadow-md text-midnight-600 hover:text-crimson-500 transition-colors z-10"
+          >
+            <ChevronLeft className="h-5 w-5 md:h-6 md:w-6" />
+          </button>
+          
+          <button 
+            onClick={nextSlide}
+            className="absolute top-1/2 right-0 transform -translate-y-1/2 translate-x-6 md:translate-x-12 bg-white p-2 rounded-full shadow-md text-midnight-600 hover:text-crimson-500 transition-colors z-10"
+          >
+            <ChevronRight className="h-5 w-5 md:h-6 md:w-6" />
+          </button>
+
+          {/* Indicators */}
+          <div className="flex justify-center mt-6 space-x-2">
+            {testimonials.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => goToSlide(index)}
+                className={`w-3 h-3 rounded-full transition-all ${
+                  index === activeSlide 
+                    ? "bg-crimson-500 w-6" 
+                    : "bg-gray-300 hover:bg-gray-400"
+                }`}
+                aria-label={`Go to slide ${index + 1}`}
+              />
+            ))}
+          </div>
         </div>
 
         <motion.div
@@ -162,7 +163,7 @@ const SuccessStoriesSection = () => {
           className="mt-12 text-center"
         >
           <p className="text-gray-600 mb-6">
-            Join GenX IAS Institute and become our next success story!
+            Join GenX IAS and become our next success story!
           </p>
           <a
             href="#contact"

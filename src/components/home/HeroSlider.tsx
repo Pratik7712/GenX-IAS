@@ -1,15 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { ChevronLeft, ChevronRight, ArrowRight } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
+import { ArrowRight } from "lucide-react";
+import { motion } from "framer-motion";
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
 } from "@/components/ui/carousel";
 import { Button } from "@/components/ui/button";
 import { fadeIn, fadeInUp } from "@/lib/animations";
+import OptimizedImage from "@/components/OptimizedImage";
 
 interface HeroSliderProps {
   slides?: {
@@ -26,7 +25,7 @@ const defaultSlides = [
   {
     id: 1,
     image: "/silder1.png",
-    title: "Welcome to GenX IAS Institute",
+    title: "Welcome to <span class='text-[#ED344C]'>GenX IAS</span>",
     description: "we're serving at AHMEDABAD, VADODARA, BHAVNAGAR, KUTCH",
     ctaText: "Explore Courses",
     ctaLink: "#courses",
@@ -34,7 +33,7 @@ const defaultSlides = [
   {
     id: 2,
     image: "/Silder2.jpg",
-    title: "Our Student Our Future",
+    title: "Our Students<br/>Our Future",
     description: "Learn from experienced educators with proven track records",
     ctaText: "Meet Our Faculty",
     ctaLink: "#faculty",
@@ -52,6 +51,18 @@ const defaultSlides = [
 const HeroSlider: React.FC<HeroSliderProps> = ({ slides = defaultSlides }) => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [api, setApi] = useState<any>(null);
+
+  // Auto slide effect
+  useEffect(() => {
+    const timer = setInterval(() => {
+      if (api) {
+        const nextIndex = (activeIndex + 1) % slides.length;
+        api.scrollTo(nextIndex);
+      }
+    }, 3000); // Change slide every 3 seconds
+
+    return () => clearInterval(timer);
+  }, [activeIndex, api, slides.length]);
 
   useEffect(() => {
     if (!api) return;
@@ -74,36 +85,40 @@ const HeroSlider: React.FC<HeroSliderProps> = ({ slides = defaultSlides }) => {
             {slides.map((slide, index) => (
               <CarouselItem key={slide.id} className="overflow-hidden">
                 <div className="relative w-full h-[400px] sm:h-[500px] md:h-[600px] lg:h-[700px]">
-                  {/* Background Image with Parallax Effect */}
-                  <motion.div
-                    className="absolute inset-0 bg-cover bg-center"
-                    style={{ backgroundImage: `url(${slide.image})` }}
-                    initial={{ scale: 1.1 }}
-                    animate={{
-                      scale: activeIndex === index ? 1 : 1.1,
-                      y: activeIndex === index ? 0 : 20,
-                    }}
-                    transition={{ duration: 6, ease: "easeOut" }}
-                  >
+                  {/* Background Image with Parallax Effect - Using OptimizedImage */}
+                  <div className="absolute inset-0">
+                    <OptimizedImage
+                      src={slide.image}
+                      alt={`Slide ${index + 1}`}
+                      width={1920}
+                      height={1080}
+                      className="w-full h-full"
+                      imgClassName="object-cover"
+                      quality={85}
+                      priority={index === 0}
+                      blurEffect={true}
+                      role="hero"
+                    />
                     {/* Overlay with Gradient */}
-                    <div className="absolute inset-0 bg-gradient-to-r from-midnight-600/80 via-midnight-500/70 to-midnight-500/80"></div>
-                  </motion.div>
+                    <div className="absolute inset-0 bg-gradient-to-r from-midnight-600/90 via-midnight-500/80 to-midnight-500/70"></div>
+                  </div>
 
-                  {/* Content */}
-                  <div className="relative z-10 flex flex-col items-center justify-center h-full text-center px-4 md:px-8 lg:px-16 text-white">
+                  {/* Content - Left Aligned */}
+                  <div className="relative z-10 flex flex-col justify-center h-full text-left px-8 md:px-16 lg:px-24 text-white">
                     <motion.div
                       initial="hidden"
                       animate={activeIndex === index ? "visible" : "hidden"}
                       variants={fadeInUp}
-                      className="mb-2 sm:mb-4"
+                      className="mb-2 sm:mb-4 max-w-2xl"
                     >
-                      <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-2 sm:mb-4 font-heading text-white drop-shadow-lg">
-                        {slide.title}
-                      </h1>
+                      <h1 
+                        className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-2 sm:mb-4 font-heading text-white leading-tight"
+                        dangerouslySetInnerHTML={{ __html: slide.title }}
+                      ></h1>
                     </motion.div>
 
                     <motion.p
-                      className="text-base sm:text-lg md:text-xl max-w-2xl mb-4 sm:mb-6 md:mb-8 text-white/90"
+                      className="text-base sm:text-lg md:text-xl max-w-xl mb-6 sm:mb-8 md:mb-10 text-white/90"
                       initial="hidden"
                       animate={activeIndex === index ? "visible" : "hidden"}
                       variants={fadeInUp}
@@ -120,7 +135,7 @@ const HeroSlider: React.FC<HeroSliderProps> = ({ slides = defaultSlides }) => {
                         transition={{ delay: 0.4 }}
                       >
                         <motion.div
-                          whileHover={{ scale: 1.05, y: -5 }}
+                          whileHover={{ scale: 1.05, y: -3 }}
                           whileTap={{ scale: 0.95 }}
                           transition={{
                             type: "spring",
@@ -144,41 +159,11 @@ const HeroSlider: React.FC<HeroSliderProps> = ({ slides = defaultSlides }) => {
                         </motion.div>
                       </motion.div>
                     )}
-
-                    {/* Decorative Elements - Hidden on mobile */}
-                    <motion.div
-                      className="absolute bottom-10 left-1/2 transform -translate-x-1/2 w-12 sm:w-16 md:w-20 h-12 sm:h-16 md:h-20 hidden sm:block"
-                      animate={{ y: [0, -10, 0] }}
-                      transition={{
-                        duration: 2,
-                        repeat: Infinity,
-                        ease: "easeInOut",
-                      }}
-                    >
-                      <svg
-                        viewBox="0 0 24 24"
-                        className="w-full h-full text-white/20"
-                      >
-                        <path
-                          fill="currentColor"
-                          d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"
-                        />
-                      </svg>
-                    </motion.div>
                   </div>
                 </div>
               </CarouselItem>
             ))}
           </CarouselContent>
-
-          {/* Navigation buttons - Position adjusts on mobile */}
-          <CarouselPrevious className="left-2 sm:left-4 md:left-8 bg-midnight-600/30 hover:bg-midnight-600/50 border-none text-white shadow-lg hover:shadow-xl transition-all duration-300 hidden sm:flex h-8 w-8 sm:h-10 sm:w-10">
-            <ChevronLeft className="h-4 w-4 sm:h-6 sm:w-6" />
-          </CarouselPrevious>
-
-          <CarouselNext className="right-2 sm:right-4 md:right-8 bg-midnight-600/30 hover:bg-midnight-600/50 border-none text-white shadow-lg hover:shadow-xl transition-all duration-300 hidden sm:flex h-8 w-8 sm:h-10 sm:w-10">
-            <ChevronRight className="h-4 w-4 sm:h-6 sm:w-6" />
-          </CarouselNext>
         </Carousel>
 
         {/* Indicators - Adjusted for mobile */}

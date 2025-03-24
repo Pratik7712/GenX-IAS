@@ -17,7 +17,7 @@ const GallerySection = () => {
     {
       id: 1,
       src: "/G1.jpg",
-      alt: "Institute Event",
+      alt: "GenX IAS Event",
       category: "events",
     },
     {
