@@ -265,26 +265,26 @@ const AboutSection = ({
                   </p>
                 </div>
                 
-                <div className="bg-gradient-to-br from-midnight-100/30 to-gray-50 flex justify-center items-center p-8">
-                  <div className="rounded-lg overflow-hidden shadow-md transform transition-all duration-500 hover:shadow-xl max-w-sm">
+                <div className="bg-gradient-to-br from-midnight-100/30 to-gray-50 flex justify-center items-center p-4">
+                  <div className="rounded-lg overflow-hidden shadow-md transform transition-all duration-500 hover:shadow-xl w-full max-w-2xl">
                     <OptimizedImage
                       src="/GenxMap.jpg"
                       alt="GenX IAS Locations"
-                      width={400}
-                      height={300}
-                      quality={80}
+                      width={800}
+                      height={600}
+                      quality={90}
                       priority={false}
                       blurEffect={true}
                       className="w-full h-full"
-                      imgClassName="w-full h-auto object-cover"
+                      imgClassName="w-full h-auto object-contain"
                       role="gallery"
                     />
-                    <div className="bg-gradient-to-r from-midnight-700 to-midnight-600 text-white p-3 text-center">
-                      <div className="flex items-center justify-center mb-1">
-                        <MapPin className="h-4 w-4 mr-2 text-crimson-400" />
-                        <span className="font-medium text-sm">Our Branches</span>
+                    <div className="bg-gradient-to-r from-midnight-700 to-midnight-600 text-white p-4">
+                      <div className="flex items-center justify-center mb-2">
+                        <MapPin className="h-5 w-5 mr-2 text-crimson-400" />
+                        <span className="font-medium text-base">Our Branches</span>
                       </div>
-                      <p className="text-xs text-gray-200">
+                      <p className="text-sm text-gray-200 text-center">
                         Serving aspirants across multiple locations in Gujarat
                       </p>
                     </div>
