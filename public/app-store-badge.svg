@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="180" height="53" viewBox="0 0 180 53" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="180" height="53" rx="8" fill="#000000"/>
+  
+  <!-- Apple Logo -->
+  <path d="M58 20C58 16 61 14 64 14C67 14 70 16 70 20" stroke="white" stroke-width="2" fill="none"/>
+  <circle cx="64" cy="26" r="6" stroke="white" stroke-width="2" fill="none"/>
+  
+  <!-- Text -->
+  <text x="75" y="23" font-family="Arial" font-size="12" fill="white">Download on the</text>
+  <text x="75" y="38" font-family="Arial" font-size="16" font-weight="bold" fill="white">App Store</text>
+</svg> 

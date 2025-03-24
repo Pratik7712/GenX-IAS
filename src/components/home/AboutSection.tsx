@@ -2,8 +2,8 @@ import React from "react";
 import { Card, CardContent } from "../ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { motion } from "framer-motion";
-import { fadeIn, fadeInUp } from "@/lib/animations";
-import { Check, BookOpen, ClipboardCheck } from "lucide-react";
+import { fadeIn, fadeInUp, staggerContainer } from "@/lib/animations";
+import { Check, BookOpen, ClipboardCheck, MapPin } from "lucide-react";
 
 interface ProfileProps {
   name: string;
@@ -54,8 +54,8 @@ interface AboutSectionProps {
 }
 
 const AboutSection = ({
-  visionMission = "Our vision is to be the premier institute for civil services preparation, empowering aspirants to achieve excellence through quality education, personalized guidance, and comprehensive study materials. We are committed to nurturing future leaders who will serve the nation with integrity and dedication.",
-  academyOverview = "GenX IAS Institute is a leading coaching institute dedicated to preparing students for UPSC, GPSC, and other competitive examinations. With state-of-the-art facilities, experienced faculty, and a proven track record of success, we provide comprehensive coaching programs tailored to meet the needs of civil service aspirants.",
+  visionMission = "Our vision is to be the premier academy for civil services preparation, empowering aspirants to achieve excellence through quality education, personalized guidance, and comprehensive study materials. We are committed to nurturing future leaders who will serve the nation with integrity and dedication.",
+  academyOverview = "GenX IAS is a leading coaching academy dedicated to preparing students for UPSC, GPSC, and other competitive examinations. With state-of-the-art facilities, experienced faculty, and a proven track record of success, we provide comprehensive coaching programs tailored to meet the needs of civil service aspirants.",
   founderProfile = {
     name: "Mr. Shubham Pandey",
     role: "Founder",
@@ -66,11 +66,44 @@ const AboutSection = ({
   directorProfile = {
     name: "Ms. Shradhha Solanki",
     role: "Managing Director",
-    bio: "Ms. Shradhha Solanki brings her expertise in educational management to GenX IAS Institute. Her strategic leadership and commitment to excellence have been instrumental in establishing the institute as a premier institution for civil services preparation.",
+    bio: "Ms. Shradhha Solanki brings her expertise in educational management to GenX IAS. Her strategic leadership and commitment to excellence have been instrumental in establishing the academy as a premier destination for civil services preparation.",
     imageUrl:
       "/Shradhha Solanki.jpg",
   },
 }: AboutSectionProps) => {
+  const textAnimation = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.08,
+      }
+    }
+  };
+
+  const letterAnimation = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.4
+      }
+    }
+  };
+
+  const animateText = (text: string) => {
+    return (
+      <motion.div variants={textAnimation} className="inline-block">
+        {text.split("").map((char, index) => (
+          <motion.span key={index} variants={letterAnimation} className="inline-block">
+            {char}
+          </motion.span>
+        ))}
+      </motion.div>
+    );
+  };
+
   return (
     <section
       id="about"
@@ -85,7 +118,7 @@ const AboutSection = ({
             variants={fadeInUp}
           >
             <h2 className="text-3xl md:text-4xl font-bold text-midnight-600 mb-3">
-              About GenX IAS Institute
+              About GenX IAS
             </h2>
             <div className="w-24 h-1 bg-crimson-500 mx-auto mb-6"></div>
             <p className="text-gray-600 max-w-3xl mx-auto">
@@ -95,113 +128,88 @@ const AboutSection = ({
           </motion.div>
         </div>
 
-        {/* Integrated About Section with Vision, Mission, and Overview */}
+        {/* Unified About Section */}
         <div className="mb-16">
           <Card className="overflow-hidden border-none shadow-2xl bg-white">
-            <CardContent className="p-0">
-              <div className="grid md:grid-cols-2 gap-0">
-                {/* Left side with image and Vision & Mission */}
-                <div className="relative h-full min-h-[400px] overflow-hidden">
-                  <div className="absolute inset-0 bg-gradient-to-r from-midnight-600/90 to-midnight-500/80 z-10"></div>
-                  <img
-                    src="https://images.unsplash.com/photo-1577896851231-70ef18881754?w=800&q=80"
-                    alt="Institute Building"
-                    className="w-full h-full object-cover"
-                  />
-                  <div className="absolute inset-0 z-20 flex flex-col justify-center p-8 text-white">
-                    <motion.div
-                      initial="hidden"
-                      whileInView="visible"
-                      viewport={{ once: true }}
-                      variants={fadeInUp}
-                    >
-                      <h3 className="text-2xl font-bold mb-4 text-white">
-                        Vision & Mission
-                      </h3>
-                      <div className="w-16 h-1 bg-crimson-500 mb-4"></div>
-                      <p className="text-white/90 leading-relaxed">
-                        {visionMission}
-                      </p>
+            <CardContent className="p-8">
+              <div className="grid md:grid-cols-1 lg:grid-cols-2 gap-8">
+                <motion.div
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true }}
+                  variants={fadeInUp}
+                >
+                  <h3 className="text-2xl font-bold text-midnight-600 mb-4">
+                    {animateText("About Our Academy")}
+                  </h3>
+                  <div className="w-16 h-1 bg-crimson-500 mb-6"></div>
+                  
+                  <p className="text-gray-700 leading-relaxed mb-6">
+                    {visionMission}
+                  </p>
+                  
+                  <p className="text-gray-700 leading-relaxed mb-6">
+                    {academyOverview}
+                  </p>
 
-                      {/* Decorative element */}
-                      <div className="absolute bottom-8 right-8 opacity-20">
-                        <svg
-                          width="120"
-                          height="120"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"
-                            stroke="white"
-                            strokeWidth="2"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          />
-                          <path
-                            d="M12 6V12L16 14"
-                            stroke="white"
-                            strokeWidth="2"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          />
-                        </svg>
-                      </div>
-                    </motion.div>
-                  </div>
-                </div>
-
-                {/* Right side with overview */}
-                <div className="p-8 md:p-10 flex flex-col justify-center bg-gradient-to-br from-white to-gray-50">
-                  <motion.div
-                    initial="hidden"
-                    whileInView="visible"
-                    viewport={{ once: true }}
-                    variants={fadeInUp}
-                  >
-                    <h3 className="text-2xl font-bold text-midnight-600 mb-4">
-                      Institute Overview
-                    </h3>
-                    <div className="w-16 h-1 bg-crimson-500 mb-4"></div>
-                    <p className="text-gray-700 leading-relaxed mb-6">
-                      {academyOverview}
-                    </p>
-
-                    <div className="flex flex-wrap gap-6">
-                      <div className="flex-1 min-w-[250px] items-center bg-midnight-50 p-4 rounded-lg shadow-sm hover:shadow-md transition-all duration-300 border border-midnight-100">
-                        <div className="flex items-center">
-                          <div className="w-14 h-14 bg-midnight-100 rounded-full flex items-center justify-center mr-4 text-crimson-500">
-                            <Check className="h-7 w-7" />
-                          </div>
-                          <span className="text-midnight-600 font-medium">
-                            Expert Faculty
-                          </span>
+                  <div className="flex flex-wrap gap-6 mb-6">
+                    <div className="flex-1 min-w-[250px] items-center bg-midnight-50 p-4 rounded-lg shadow-sm hover:shadow-md transition-all duration-300 border border-midnight-100">
+                      <div className="flex items-center">
+                        <div className="w-14 h-14 bg-midnight-100 rounded-full flex items-center justify-center mr-4 text-crimson-500">
+                          <Check className="h-7 w-7" />
                         </div>
-                      </div>
-                      <div className="flex-1 min-w-[250px] items-center bg-midnight-50 p-4 rounded-lg shadow-sm hover:shadow-md transition-all duration-300 border border-midnight-100">
-                        <div className="flex items-center">
-                          <div className="w-14 h-14 bg-midnight-100 rounded-full flex items-center justify-center mr-4 text-crimson-500">
-                            <BookOpen className="h-7 w-7" />
-                          </div>
-                          <span className="text-midnight-600 font-medium">
-                            Comprehensive Study Material
-                          </span>
-                        </div>
-                      </div>
-                      <div className="flex-1 min-w-[250px] items-center bg-midnight-50 p-4 rounded-lg shadow-sm hover:shadow-md transition-all duration-300 border border-midnight-100">
-                        <div className="flex items-center">
-                          <div className="w-14 h-14 bg-midnight-100 rounded-full flex items-center justify-center mr-4 text-crimson-500">
-                            <ClipboardCheck className="h-7 w-7" />
-                          </div>
-                          <span className="text-midnight-600 font-medium">
-                            Regular Test Series
-                          </span>
-                        </div>
+                        <span className="text-midnight-600 font-medium">
+                          Expert Faculty
+                        </span>
                       </div>
                     </div>
-                  </motion.div>
-                </div>
+                    <div className="flex-1 min-w-[250px] items-center bg-midnight-50 p-4 rounded-lg shadow-sm hover:shadow-md transition-all duration-300 border border-midnight-100">
+                      <div className="flex items-center">
+                        <div className="w-14 h-14 bg-midnight-100 rounded-full flex items-center justify-center mr-4 text-crimson-500">
+                          <BookOpen className="h-7 w-7" />
+                        </div>
+                        <span className="text-midnight-600 font-medium">
+                          Comprehensive Study Material
+                        </span>
+                      </div>
+                    </div>
+                    <div className="flex-1 min-w-[250px] items-center bg-midnight-50 p-4 rounded-lg shadow-sm hover:shadow-md transition-all duration-300 border border-midnight-100">
+                      <div className="flex items-center">
+                        <div className="w-14 h-14 bg-midnight-100 rounded-full flex items-center justify-center mr-4 text-crimson-500">
+                          <ClipboardCheck className="h-7 w-7" />
+                        </div>
+                        <span className="text-midnight-600 font-medium">
+                          Regular Test Series
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+                
+                <motion.div
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true }}
+                  variants={fadeInUp}
+                  className="flex justify-center items-center"
+                >
+                  <div className="rounded-lg overflow-hidden shadow-xl">
+                    <img
+                      src="/GenxMap.jpg"
+                      alt="GenX IAS Locations"
+                      className="w-full h-auto"
+                    />
+                    <div className="bg-midnight-600 text-white p-4 text-center">
+                      <div className="flex items-center justify-center mb-2">
+                        <MapPin className="h-5 w-5 mr-2 text-crimson-500" />
+                        <span className="font-medium">Our Branches</span>
+                      </div>
+                      <p className="text-sm text-gray-300">
+                        Serving aspirants across multiple locations in Gujarat
+                      </p>
+                    </div>
+                  </div>
+                </motion.div>
               </div>
             </CardContent>
           </Card>
@@ -212,7 +220,7 @@ const AboutSection = ({
           <h3 className="text-2xl md:text-3xl font-bold text-midnight-600 mb-8 text-center">
             Director's Desk
           </h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+          <div className="grid grid-cols-1 gap-8 max-w-2xl mx-auto">
             <Profile
               name={founderProfile.name}
               role={founderProfile.role}

@@ -37,16 +37,9 @@ const FacultyCard = ({
               <img
                 src={imageUrl}
                 alt={name}
-                className="w-full h-full object-cover object-center aspect-square"
+                className="w-full h-full object-contain md:object-cover object-center aspect-square"
+                style={{ objectPosition: name === "Mr. Bilal Ahmed" ? "center top" : "center" }}
               />
-              <div className="absolute top-4 right-4 bg-white p-2 rounded-full shadow-md">
-                <a
-                  href="#"
-                  className="text-midnight-600 hover:text-crimson-500 transition-colors"
-                >
-                  <LinkedinIcon className="h-5 w-5" />
-                </a>
-              </div>
             </div>
             <div className="md:w-2/3 p-6">
               <div className="mb-4">
@@ -91,56 +84,82 @@ const FacultyCard = ({
 const FacultySection = () => {
   const facultyMembers: FacultyMemberProps[] = [
     {
-      name: "Dr. Rajiv Mehta",
+      name: "Mr. Shubham Pandey",
       role: "Director & UPSC Expert",
-      qualifications: "Ph.D. in Political Science, IAS (Retd.)",
-      experience: "20+ years",
-      specialization: "Indian Polity & Governance",
-      achievements: [
-        "Former Secretary to Government of India",
-        "Author of 5 books on Indian Administration",
-        "Mentored over 200 successful civil services candidates",
-      ],
-      imageUrl: "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=400&q=80",
-    },
-    {
-      name: "Prof. Anjali Sharma",
-      role: "Economics Faculty",
-      qualifications: "M.A. Economics, Delhi School of Economics",
-      experience: "15+ years",
-      specialization: "Indian Economy & International Relations",
-      achievements: [
-        "Visiting faculty at top universities",
-        "Consultant to various economic think tanks",
-        "Published research papers in international journals",
-      ],
-      imageUrl: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&q=80",
-    },
-    {
-      name: "Prof. Sanjay Verma",
-      role: "History & Culture Expert",
-      qualifications: "M.Phil in Ancient Indian History",
-      experience: "18+ years",
-      specialization: "Indian History & Cultural Heritage",
-      achievements: [
-        "Former UGC Research Fellow",
-        "Authored comprehensive study materials for UPSC History",
-        "Cultural consultant to Archaeological Survey of India",
-      ],
-      imageUrl: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&q=80",
-    },
-    {
-      name: "Dr. Meera Patel",
-      role: "Science & Technology Faculty",
-      qualifications: "Ph.D. in Environmental Sciences, IFS (Retd.)",
+      qualifications: "B.Tech Software Engineer",
       experience: "12+ years",
-      specialization: "Environment & Ecology, Science & Technology",
+      specialization: "Indian Polity & Governance, Public Administration, Economy",
       achievements: [
-        "Former Forest Officer with expertise in environmental policies",
-        "Member of Climate Change advisory panels",
-        "Developed specialized curriculum for civil services aspirants",
+        "Expert in Indian Polity & Governance",
+        "Specialist in Public Administration",
+        "Economy expert for civil services"
       ],
-      imageUrl: "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=400&q=80",
+      imageUrl: "/Shubham Pandey.jpg",
+    },
+    {
+      name: "Ms. Shradhha Solanki",
+      role: "Managing Director",
+      qualifications: "Phd. Botany",
+      experience: "5+ years",
+      specialization: "Science and Technology",
+      achievements: [
+        "Science and Technology expert",
+        "Specialized curriculum development",
+        "Research in botanical sciences"
+      ],
+      imageUrl: "/Shradhha Solanki.jpg",
+    },
+    {
+      name: "Mr. Pruthvirajsinh",
+      role: "Faculty",
+      qualifications: "Regional Expert",
+      experience: "5+ years",
+      specialization: "Gujarat History, Gujarat Culture, Gujarat Geography",
+      achievements: [
+        "Expert in Gujarat History",
+        "Specialist in regional culture studies",
+        "Regional geography consultant"
+      ],
+      imageUrl: "/Pruthvirajsinh.jpg",
+    },
+    {
+      name: "Mr. Bilal Ahmed",
+      role: "Faculty",
+      qualifications: "Police Inspector (Class 2), Gujarat Police",
+      experience: "5+ years",
+      specialization: "Ethics, History",
+      achievements: [
+        "Experienced law enforcement professional",
+        "Ethics and moral philosophy expert",
+        "Historical studies specialist"
+      ],
+      imageUrl: "/Bilal_Ahmed.jpg",
+    },
+    {
+      name: "Azad Katta",
+      role: "Faculty",
+      qualifications: "Engineer",
+      experience: "5+ years",
+      specialization: "Geography",
+      achievements: [
+        "Geography specialist",
+        "Cartography expert",
+        "Developed specialized geography curriculum"
+      ],
+      imageUrl: "/Azad Katta.jpg",
+    },
+    {
+      name: "Dr. Ami Prajapati",
+      role: "Faculty",
+      qualifications: "Doctor",
+      experience: "5+ years",
+      specialization: "Environment",
+      achievements: [
+        "Environmental science specialist",
+        "Medical professional with environmental expertise",
+        "Environmental policy consultant"
+      ],
+      imageUrl: "/Ami Prajapati.jpg",
     },
   ];
 
