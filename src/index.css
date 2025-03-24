@@ -356,4 +356,35 @@
   .animate-on-scroll.is-visible {
     @apply opacity-100 translate-y-0;
   }
+  
+  /* Profile image classes for face-focused responsive positioning */
+  .shubham-profile-image {
+    object-position: center 35%;
+  }
+  
+  .shradhha-profile-image {
+    object-position: center 25%;
+  }
+  
+  /* Mobile-specific positioning adjustments */
+  @media (max-width: 768px) {
+    .shubham-profile-image {
+      object-position: center 30%;
+    }
+    
+    .shradhha-profile-image {
+      object-position: center 20%;
+    }
+  }
+  
+  /* Small mobile-specific positioning adjustments */
+  @media (max-width: 480px) {
+    .shubham-profile-image {
+      object-position: center 25%;
+    }
+    
+    .shradhha-profile-image {
+      object-position: center 15%;
+    }
+  }
 }

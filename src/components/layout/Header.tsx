@@ -101,6 +101,55 @@ const Header = ({
   const [scrolled, setScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState("#home");
   const [activeSubmenu, setActiveSubmenu] = useState<string | null>(null);
+  const mobileMenuRef = React.useRef<HTMLDivElement>(null);
+  const menuButtonRef = React.useRef<HTMLButtonElement>(null);
+
+  // Close mobile menu when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        mobileMenuOpen &&
+        mobileMenuRef.current &&
+        !mobileMenuRef.current.contains(event.target as Node) &&
+        menuButtonRef.current &&
+        !menuButtonRef.current.contains(event.target as Node)
+      ) {
+        setMobileMenuOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [mobileMenuOpen]);
+
+  // Lock scroll when mobile menu is open
+  useEffect(() => {
+    if (mobileMenuOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [mobileMenuOpen]);
+
+  // Handle escape key press
+  useEffect(() => {
+    const handleEscapeKey = (event: KeyboardEvent) => {
+      if (event.key === "Escape" && mobileMenuOpen) {
+        setMobileMenuOpen(false);
+      }
+    };
+
+    document.addEventListener("keydown", handleEscapeKey);
+    return () => {
+      document.removeEventListener("keydown", handleEscapeKey);
+    };
+  }, [mobileMenuOpen]);
 
   // Handle scroll event to update active section
   useEffect(() => {
@@ -152,23 +201,28 @@ const Header = ({
         top: 0,
         behavior: "smooth",
       });
-      return;
-    }
+    } else {
+      const targetId = href.replace("#", "");
+      const targetElement = document.getElementById(targetId);
 
-    const targetId = href.replace("#", "");
-    const targetElement = document.getElementById(targetId);
-
-    if (targetElement) {
-      const offsetTop = targetElement.getBoundingClientRect().top + window.pageYOffset - 80;
-      window.scrollTo({
-        top: offsetTop,
-        behavior: "smooth",
-      });
+      if (targetElement) {
+        const offsetTop = targetElement.getBoundingClientRect().top + window.pageYOffset - 80;
+        window.scrollTo({
+          top: offsetTop,
+          behavior: "smooth",
+        });
+      }
     }
 
     // Close mobile menu if it's open
     if (mobileMenuOpen) {
       setMobileMenuOpen(false);
+      // Return focus to menu button after closing menu
+      setTimeout(() => {
+        if (menuButtonRef.current) {
+          menuButtonRef.current.focus();
+        }
+      }, 300);
     }
   };
 
@@ -179,6 +233,12 @@ const Header = ({
     } else {
       setActiveSubmenu(href);
     }
+  };
+
+  // Function to handle clicking on a submenu item
+  const handleSubmenuItemClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    handleSmoothScroll(e, href);
+    setActiveSubmenu(null); // Close the submenu
   };
 
   return (
@@ -235,7 +295,7 @@ const Header = ({
                           <a
                             key={subIndex}
                             href={subItem.href}
-                            onClick={(e) => handleSmoothScroll(e, subItem.href)}
+                            onClick={(e) => handleSubmenuItemClick(e, subItem.href)}
                             className={`block px-4 py-2 text-sm ${
                               isActive(subItem.href)
                                 ? "text-crimson-500 font-semibold"
@@ -291,9 +351,11 @@ const Header = ({
           {/* Mobile menu button */}
           <div className="lg:hidden flex items-center">
             <button
+              ref={menuButtonRef}
               className="p-2 rounded-md text-white hover:bg-midnight-500 transition-colors"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               aria-label="Toggle menu"
+              aria-expanded={mobileMenuOpen}
             >
               {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
             </button>
@@ -305,11 +367,15 @@ const Header = ({
       <AnimatePresence>
         {mobileMenuOpen && (
           <motion.div
-            className="lg:hidden bg-midnight-600 overflow-y-auto"
+            ref={mobileMenuRef}
+            className="lg:hidden bg-midnight-600 overflow-y-auto border-t border-midnight-400"
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.3 }}
+            transition={{ duration: 0.3, ease: "easeInOut" }}
+            role="dialog"
+            aria-modal="true"
+            aria-label="Mobile navigation menu"
           >
             <div className="px-4 py-5 space-y-3 max-h-[70vh] overflow-y-auto">
               {menuItems.map((item, index) => (
@@ -318,9 +384,12 @@ const Header = ({
                     <div>
                       <button
                         onClick={() => toggleSubmenu(item.href)}
-                        className={`flex justify-between items-center w-full py-2 px-3 rounded-md ${
-                          isActive(item.href) ? "text-crimson-500 font-semibold" : "text-white"
+                        className={`flex justify-between items-center w-full py-2 px-3 rounded-md transition-colors duration-300 ${
+                          isActive(item.href) 
+                            ? "text-crimson-500 font-semibold bg-midnight-500/30" 
+                            : "text-white hover:bg-midnight-500/20"
                         }`}
+                        aria-expanded={activeSubmenu === item.href}
                       >
                         <span>{item.label}</span>
                         <svg
@@ -353,11 +422,11 @@ const Header = ({
                               <a
                                 key={subIndex}
                                 href={subItem.href}
-                                onClick={(e) => handleSmoothScroll(e, subItem.href)}
-                                className={`block py-2 px-3 rounded-md ${
+                                onClick={(e) => handleSubmenuItemClick(e, subItem.href)}
+                                className={`block py-2 px-3 rounded-md transition-colors duration-300 ${
                                   isActive(subItem.href)
-                                    ? "text-crimson-500 font-semibold"
-                                    : "text-white/90 hover:text-crimson-300"
+                                    ? "text-crimson-500 font-semibold bg-midnight-500/30"
+                                    : "text-white/90 hover:bg-midnight-500/20 hover:text-crimson-300"
                                 }`}
                               >
                                 {subItem.label}
@@ -371,10 +440,10 @@ const Header = ({
                     <a
                       href={item.href}
                       onClick={(e) => handleSmoothScroll(e, item.href)}
-                      className={`block py-2 px-3 rounded-md ${
+                      className={`block py-2 px-3 rounded-md transition-colors duration-300 ${
                         isActive(item.href)
-                          ? "text-crimson-500 font-semibold"
-                          : "text-white hover:text-crimson-300"
+                          ? "text-crimson-500 font-semibold bg-midnight-500/30"
+                          : "text-white hover:bg-midnight-500/20"
                       }`}
                     >
                       {item.label}
@@ -385,12 +454,15 @@ const Header = ({
               
               {/* Mobile contact info */}
               <div className="pt-4 space-y-3">
-                <a href={`tel:${contactPhone}`} className="flex items-center text-white/90 hover:text-white transition-colors px-3 py-2">
+                <a href={`tel:${contactPhone}`} className="flex items-center text-white/90 hover:text-white transition-colors px-3 py-2 rounded-md hover:bg-midnight-500/20">
                   <Phone className="h-5 w-5 mr-3 text-crimson-400" /> {contactPhone}
+                </a>
+                <a href={`mailto:${contactEmail}`} className="flex items-center text-white/90 hover:text-white transition-colors px-3 py-2 rounded-md hover:bg-midnight-500/20">
+                  <Mail className="h-5 w-5 mr-3 text-crimson-400" /> {contactEmail}
                 </a>
                 <Button
                   size="sm" 
-                  className="w-full bg-crimson-500 hover:bg-crimson-600 text-white"
+                  className="w-full bg-crimson-500 hover:bg-crimson-600 text-white transition-all duration-300"
                 >
                   <a
                     href="#contact"

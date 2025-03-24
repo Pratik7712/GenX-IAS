@@ -21,9 +21,9 @@ const Home = () => {
         <CoursesSection />
         <BatchesSection />
         <FacultySection />
+        <AppSection />
         <SuccessStoriesSection />
         <GallerySection />
-        <AppSection />
         <ContactSection />
       </main>
       <Footer />

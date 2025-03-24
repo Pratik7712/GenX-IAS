@@ -99,26 +99,26 @@ const BatchesSection = () => {
   const batches = [
     {
       title: "UPSC CSE Comprehensive Batch",
-      startDate: "August 15, 2023",
+      startDate: "August 15, 2025",
       duration: "12 months",
       slots: 40,
       isPopular: true,
     },
     {
       title: "GPSC Special Batch",
-      startDate: "September 5, 2023",
+      startDate: "September 5, 2025",
       duration: "9 months",
       slots: 35,
     },
     {
       title: "UPSC Weekend Batch",
-      startDate: "August 20, 2023",
+      startDate: "August 20, 2025",
       duration: "15 months",
       slots: 25,
     },
     {
       title: "UPSC Foundation Course",
-      startDate: "October 10, 2023",
+      startDate: "October 10, 2025",
       duration: "6 months",
       slots: 50,
     },

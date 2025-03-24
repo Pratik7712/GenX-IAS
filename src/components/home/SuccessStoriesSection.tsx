@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { fadeIn, fadeInUp } from "@/lib/animations";
 import { Card, CardContent } from "../ui/card";
-import { Quote, ChevronLeft, ChevronRight } from "lucide-react";
+import { Quote, Star } from "lucide-react";
 
 interface TestimonialProps {
   name: string;
@@ -10,18 +10,37 @@ interface TestimonialProps {
 }
 
 const Testimonial = ({ name, text }: TestimonialProps) => {
+  // For longer text, we'll truncate it on mobile
+  const isTruncatable = text.length > 150;
+  
   return (
-    <Card className="h-full overflow-hidden shadow-md bg-white border-midnight-100">
-      <CardContent className="p-6">
-        <div className="flex flex-col h-full">
-          <div className="relative flex-grow mb-4">
-            <Quote className="h-8 w-8 text-crimson-200 absolute -top-1 -left-1" />
-            <p className="text-gray-700 italic pl-6 relative z-10 mb-4">{text}</p>
-          </div>
-          
-          <div className="mt-auto">
-            <h3 className="text-lg font-bold text-midnight-600">{name}</h3>
-          </div>
+    <Card className="h-full overflow-hidden shadow-md bg-white border border-[#FF0000] hover:shadow-lg transition-all duration-300 flex flex-col group w-[300px] flex-shrink-0 mx-[10px] rounded-lg">
+      {/* Accent color stripe */}
+      <div className="h-2 bg-gradient-to-r from-[#FF0000] to-[#FF0000]/80"></div>
+      
+      <CardContent className="p-5 md:p-6 flex flex-col flex-grow">
+        {/* Star rating */}
+        <div className="flex mb-3 text-yellow-400">
+          {Array(5).fill(0).map((_, i) => (
+            <Star key={i} className="h-4 w-4 fill-current" />
+          ))}
+        </div>
+        
+        <div className="relative flex-grow mb-4">
+          <Quote className="h-8 w-8 text-crimson-200 absolute -top-1 -left-1 opacity-70 group-hover:text-crimson-300 transition-colors" />
+          <p className={`text-[#1E2A36] italic pl-6 relative z-10 mb-4 text-sm md:text-base ${
+            isTruncatable ? 'line-clamp-4 sm:line-clamp-5 md:line-clamp-6' : ''
+          }`}>
+            {text}
+          </p>
+          {isTruncatable && (
+            <span className="text-xs text-[#FF0000] font-medium pl-6 block md:hidden">Read more</span>
+          )}
+        </div>
+        
+        <div className="mt-auto pt-3 border-t border-gray-100">
+          <h3 className="text-lg font-bold text-[#1E2A36] group-hover:text-[#FF0000] transition-colors">{name}</h3>
+          <p className="text-xs text-gray-500">GenX IAS Student</p>
         </div>
       </CardContent>
     </Card>
@@ -29,9 +48,8 @@ const Testimonial = ({ name, text }: TestimonialProps) => {
 };
 
 const SuccessStoriesSection = () => {
-  const [activeSlide, setActiveSlide] = useState(0);
-  const [isPaused, setIsPaused] = useState(false);
-
+  const [isMarqueePaused, setIsMarqueePaused] = useState(false);
+  
   const testimonials: TestimonialProps[] = [
     {
       name: "Abhishek Garg",
@@ -59,99 +77,156 @@ const SuccessStoriesSection = () => {
     }
   ];
 
-  // Auto-rotate slides
-  useEffect(() => {
-    if (!isPaused) {
-      const interval = setInterval(() => {
-        setActiveSlide((prev) => (prev + 1) % testimonials.length);
-      }, 5000); // Change slide every 5 seconds
-      
-      return () => clearInterval(interval);
-    }
-  }, [isPaused, testimonials.length]);
-
-  const goToSlide = (index: number) => {
-    setActiveSlide(index);
-  };
-
-  const nextSlide = () => {
-    setActiveSlide((prev) => (prev + 1) % testimonials.length);
-  };
-
-  const prevSlide = () => {
-    setActiveSlide((prev) => (prev - 1 + testimonials.length) % testimonials.length);
-  };
-
   return (
-    <section id="success-stories" className="py-20 bg-gray-50">
+    <section id="success-stories" className="py-16 md:py-20 bg-gray-50">
       <div className="container mx-auto px-4">
         <motion.div
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
           variants={fadeInUp}
-          className="text-center mb-12"
+          className="text-center mb-10 md:mb-12"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-midnight-600 mb-3">
-            Success Stories
+          <h2 className="text-3xl md:text-4xl font-bold text-[#1E2A36] mb-3">
+            Student Reviews
           </h2>
-          <div className="w-24 h-1 bg-crimson-500 mx-auto mb-6"></div>
+          <div className="w-24 h-1 bg-[#FF0000] mx-auto mb-6"></div>
           <p className="text-gray-600 max-w-3xl mx-auto">
             Hear from our students about their experience with GenX IAS.
-            Their words speak volumes about our dedication to excellence.
+            Their success stories reflect our commitment to excellence.
           </p>
         </motion.div>
 
-        {/* Testimonial Slider */}
-        <div className="relative max-w-4xl mx-auto"
-             onMouseEnter={() => setIsPaused(true)}
-             onMouseLeave={() => setIsPaused(false)}>
-          
-          {/* Slides */}
-          <div className="relative h-[300px] md:h-[250px] overflow-hidden">
-            {testimonials.map((testimonial, index) => (
-              <div key={index} 
-                   className={`absolute inset-0 transition-all duration-500 transform ${
-                     index === activeSlide 
-                       ? "opacity-100 translate-x-0" 
-                       : index < activeSlide 
-                         ? "opacity-0 -translate-x-full" 
-                         : "opacity-0 translate-x-full"
-                   }`}>
+        {/* Mobile Stacked View (visible only on very small screens) */}
+        <div className="block sm:hidden">
+          <div className="px-4 space-y-4">
+            {testimonials.slice(0, 3).map((testimonial, index) => (
+              <div key={index} className="w-full">
                 <Testimonial name={testimonial.name} text={testimonial.text} />
               </div>
             ))}
+            <div className="text-center mt-2">
+              <a href="#contact" className="text-[#FF0000] text-sm font-medium">
+                See more reviews →
+              </a>
+            </div>
           </div>
-          
-          {/* Navigation arrows */}
-          <button 
-            onClick={prevSlide}
-            className="absolute top-1/2 left-0 transform -translate-y-1/2 -translate-x-6 md:-translate-x-12 bg-white p-2 rounded-full shadow-md text-midnight-600 hover:text-crimson-500 transition-colors z-10"
-          >
-            <ChevronLeft className="h-5 w-5 md:h-6 md:w-6" />
-          </button>
-          
-          <button 
-            onClick={nextSlide}
-            className="absolute top-1/2 right-0 transform -translate-y-1/2 translate-x-6 md:translate-x-12 bg-white p-2 rounded-full shadow-md text-midnight-600 hover:text-crimson-500 transition-colors z-10"
-          >
-            <ChevronRight className="h-5 w-5 md:h-6 md:w-6" />
-          </button>
+        </div>
 
-          {/* Indicators */}
-          <div className="flex justify-center mt-6 space-x-2">
-            {testimonials.map((_, index) => (
-              <button
-                key={index}
-                onClick={() => goToSlide(index)}
-                className={`w-3 h-3 rounded-full transition-all ${
-                  index === activeSlide 
-                    ? "bg-crimson-500 w-6" 
-                    : "bg-gray-300 hover:bg-gray-400"
-                }`}
-                aria-label={`Go to slide ${index + 1}`}
-              />
-            ))}
+        {/* Marquee Animation (hidden on small screens) */}
+        <div className="hidden sm:block relative">
+          {/* CSS Animation */}
+          <style dangerouslySetInnerHTML={{ __html: `
+            @keyframes marquee {
+              0% { transform: translateX(0); }
+              100% { transform: translateX(calc(-300px * 6 - 120px)); }
+            }
+            
+            .marquee-content {
+              will-change: transform;
+              display: flex;
+              gap: 20px;
+              padding-right: 20px;
+              animation: marquee 40s linear infinite;
+            }
+            
+            .marquee-container:hover .marquee-content {
+              animation-play-state: paused;
+            }
+            
+            .marquee-container::after {
+              content: '';
+              position: absolute;
+              top: 0;
+              left: 0;
+              right: 0;
+              bottom: 0;
+              pointer-events: none;
+              background: rgba(255,255,255,0);
+              transition: background 0.3s ease;
+              z-index: 1;
+            }
+            
+            .marquee-container:hover::after {
+              background: rgba(255,255,255,0.03);
+            }
+            
+            /* Responsive container widths */
+            @media (min-width: 640px) and (max-width: 767px) {
+              .marquee-wrapper {
+                width: calc(300px * 1 + 20px);
+                margin: 0 auto;
+                overflow: hidden;
+              }
+            }
+            
+            @media (min-width: 768px) and (max-width: 1023px) {
+              .marquee-wrapper {
+                width: calc(300px * 2 + 20px);
+                margin: 0 auto;
+                overflow: hidden;
+              }
+            }
+            
+            @media (min-width: 1024px) {
+              .marquee-wrapper {
+                width: calc(300px * 3 + 40px);
+                margin: 0 auto;
+                overflow: hidden;
+              }
+            }
+            
+            /* Responsive animation speed */
+            @media (min-width: 640px) and (max-width: 767px) {
+              .marquee-content {
+                animation-duration: 20s !important;
+              }
+            }
+            
+            @media (min-width: 768px) and (max-width: 1023px) {
+              .marquee-content {
+                animation-duration: 25s !important;
+              }
+            }
+            
+            @media (min-width: 1024px) {
+              .marquee-content {
+                animation-duration: 30s !important;
+              }
+            }
+          `}} />
+          
+          {/* Responsive Marquee Container - Shows precise number of cards */}
+          <div className="marquee-wrapper relative">
+            <div 
+              className="marquee-container overflow-hidden relative rounded-lg py-2"
+              onMouseEnter={() => setIsMarqueePaused(true)}
+              onMouseLeave={() => setIsMarqueePaused(false)}
+            >
+              <div 
+                className="marquee-content"
+                style={{
+                  animationPlayState: isMarqueePaused ? "paused" : "running",
+                }}
+              >
+                {/* All cards in a continuous row */}
+                {testimonials.map((testimonial, index) => (
+                  <div key={index} className="flex-shrink-0">
+                    <Testimonial name={testimonial.name} text={testimonial.text} />
+                  </div>
+                ))}
+                {/* Duplicate set for seamless looping */}
+                {testimonials.map((testimonial, index) => (
+                  <div key={`duplicate-${index}`} className="flex-shrink-0">
+                    <Testimonial name={testimonial.name} text={testimonial.text} />
+                  </div>
+                ))}
+              </div>
+              
+              {/* Edge gradient overlays */}
+              <div className="absolute left-0 top-0 bottom-0 w-16 bg-gradient-to-r from-gray-50 to-transparent pointer-events-none z-10"></div>
+              <div className="absolute right-0 top-0 bottom-0 w-16 bg-gradient-to-l from-gray-50 to-transparent pointer-events-none z-10"></div>
+            </div>
           </div>
         </div>
 
@@ -160,14 +235,14 @@ const SuccessStoriesSection = () => {
           whileInView="visible"
           viewport={{ once: true }}
           variants={fadeIn}
-          className="mt-12 text-center"
+          className="mt-10 md:mt-12 text-center"
         >
           <p className="text-gray-600 mb-6">
             Join GenX IAS and become our next success story!
           </p>
           <a
             href="#contact"
-            className="inline-block py-3 px-6 bg-crimson-500 hover:bg-crimson-600 text-white rounded-md transition-colors duration-300 font-medium"
+            className="inline-block py-3 px-6 bg-[#FF0000] hover:bg-[#e60000] text-white rounded-md transition-all duration-300 font-medium shadow-md hover:shadow-lg transform hover:-translate-y-1 active:translate-y-0"
           >
             Start Your Journey
           </a>

@@ -38,28 +38,42 @@ const Profile = ({
   bio = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
   imageUrl = "https://api.dicebear.com/7.x/avataaars/svg?seed=default",
 }: ProfileProps) => {
+  // Determine custom class based on the image
+  const getCustomClass = () => {
+    if (imageUrl.includes("Shubham")) {
+      return "shubham-profile-image";
+    } else if (imageUrl.includes("Shradhha")) {
+      return "shradhha-profile-image";
+    }
+    return "";
+  };
+
   return (
     <Card className="overflow-hidden bg-white border-midnight-200 hover:shadow-xl transition-all duration-300">
       <CardContent className="p-0">
         <div className="flex flex-col md:flex-row">
-          <div className="md:w-1/3 overflow-hidden">
-            <OptimizedImage
-              src={imageUrl}
-              alt={`${name} - ${role}`}
-              width={300}
-              height={300}
-              quality={85}
-              blurEffect={true}
-              priority={false}
-              className="w-full h-full"
-              imgClassName="object-cover w-full h-full max-h-[300px]"
-              role="profile"
-            />
+          {/* Image container with fixed aspect ratio */}
+          <div className="md:w-1/3 overflow-hidden relative">
+            {/* Mobile height (300px) and auto height on larger screens with aspect ratio preservation */}
+            <div className="h-[300px] md:h-full md:aspect-[3/4] relative">
+              <OptimizedImage
+                src={imageUrl}
+                alt={`${name} - ${role}`}
+                width={400}
+                height={400}
+                quality={90}
+                blurEffect={true}
+                priority={true} // Changed to true for important profile images
+                className="w-full h-full"
+                imgClassName={`w-full h-full object-cover ${getCustomClass()}`}
+                role="profile"
+              />
+            </div>
           </div>
-          <div className="md:w-2/3 p-6 flex flex-col justify-center">
+          <div className="md:w-2/3 p-4 md:p-6 flex flex-col justify-center">
             <h4 className="text-xl font-semibold text-midnight-600">{name}</h4>
-            <p className="text-crimson-500 font-medium mb-3">{role}</p>
-            <p className="text-gray-700 leading-relaxed">{bio}</p>
+            <p className="text-crimson-500 font-medium mb-2 md:mb-3">{role}</p>
+            <p className="text-gray-700 leading-relaxed text-sm md:text-base">{bio}</p>
           </div>
         </div>
       </CardContent>
@@ -295,13 +309,13 @@ const AboutSection = ({
           </Card>
         </div>
 
-        {/* Director's Desk Section - Horizontal Layout with Facing Images */}
+        {/* Director's Desk Section - Responsive Layout with Face-Focused Images */}
         <div className="mb-8">
-          <h3 className="text-2xl md:text-3xl font-bold text-midnight-600 mb-8 text-center">
+          <h3 className="text-2xl md:text-3xl font-bold text-midnight-600 mb-4 md:mb-8 text-center">
             Director's Desk
           </h3>
-          <div className="grid grid-cols-1 gap-8">
-            <div className="grid md:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 gap-4 md:gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8">
               {/* Founder Profile */}
               <Profile
                 name={founderProfile.name}

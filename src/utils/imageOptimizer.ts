@@ -63,7 +63,7 @@ export function getResponsiveSizes(role: 'hero' | 'gallery' | 'thumbnail' | 'pro
     case 'thumbnail':
       return "(max-width: 640px) 50vw, 25vw";
     case 'profile':
-      return "(max-width: 640px) 33vw, 25vw";
+      return "(max-width: 640px) 100vw, (max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw";
     default:
       return "(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw";
   }

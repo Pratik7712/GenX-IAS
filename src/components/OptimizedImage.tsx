@@ -13,6 +13,7 @@ interface OptimizedImageProps {
   blurEffect?: boolean;
   priority?: boolean;
   loading?: 'lazy' | 'eager';
+  objectPosition?: string;
 }
 
 export default function OptimizedImage({
@@ -27,6 +28,7 @@ export default function OptimizedImage({
   blurEffect = false,
   priority = false,
   loading = 'lazy',
+  objectPosition,
   ...rest
 }: OptimizedImageProps) {
   // Get responsive sizes based on image role
@@ -49,11 +51,12 @@ export default function OptimizedImage({
         alt={alt}
         width={width}
         height={height}
-        className={`object-cover w-full h-full ${imgClassName}`}
+        className={`w-full h-full ${imgClassName}`}
         loading={priority ? 'eager' : 'lazy'}
         style={{
           opacity: blurEffect ? 0 : 1,
           transition: 'opacity 0.3s ease-in-out',
+          objectPosition: objectPosition,
         }}
         onLoad={(e) => {
           if (blurEffect) {
