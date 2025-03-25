@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   Instagram,
   Youtube,
@@ -13,6 +13,67 @@ import ScrollToTop from "../ui/scroll-to-top";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
+  const [activeSection, setActiveSection] = useState("#home");
+
+  // Handle scroll event to update active section
+  useEffect(() => {
+    const handleScroll = () => {
+      const offset = window.scrollY;
+      
+      // Determine active section based on scroll position
+      const sections = document.querySelectorAll("section[id]");
+      let foundActiveSection = false;
+      sections.forEach((section) => {
+        const sectionTop = (section as HTMLElement).offsetTop - 100;
+        const sectionHeight = (section as HTMLElement).offsetHeight;
+        if (offset >= sectionTop && offset < sectionTop + sectionHeight) {
+          setActiveSection(`#${section.id}`);
+          foundActiveSection = true;
+        }
+      });
+
+      // If no section is in view, default to #home
+      if (!foundActiveSection && offset < 100) {
+        setActiveSection("#home");
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  // Check if a menu item is active
+  const isActive = (href: string) => {
+    return activeSection === href;
+  };
+
+  // Smooth scrolling function
+  const handleSmoothScroll = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    e.preventDefault();
+
+    // Set the active section immediately on click
+    setActiveSection(href);
+
+    // Handle special case for home
+    if (href === "#home") {
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
+      return;
+    }
+
+    const targetId = href.replace("#", "");
+    const targetElement = document.getElementById(targetId);
+
+    if (targetElement) {
+      const offsetTop = targetElement.getBoundingClientRect().top + window.pageYOffset - 80;
+      window.scrollTo({
+        top: offsetTop,
+        behavior: "smooth",
+      });
+    }
+  };
 
   const socialIconVariants = {
     hover: {
@@ -25,6 +86,26 @@ const Footer = () => {
   const linkVariants = {
     hover: { x: 5, transition: { duration: 0.2 } },
   };
+
+  // Updated footer links with correct IDs
+  const footerLinks = [
+    { href: "#home", label: "Home" },
+    { href: "#about", label: "About Us" },
+    { href: "#courses", label: "Courses" },
+    { href: "#batches", label: "Batches" },
+    { href: "#faculty", label: "Faculty" },
+    { href: "#success-stories", label: "Success Stories" },
+    { href: "#contact", label: "Contact" },
+  ];
+
+  // Our Programs links
+  const programLinks = [
+    { href: "#courses", label: "UPSC Program" },
+    { href: "#courses", label: "GPSC Program" },
+    { href: "#courses", label: "PI Program" },
+    { href: "#courses", label: "PSI/CONSTABLE Program" },
+    { href: "#courses", label: "CCE Program" }
+  ];
 
   return (
     <footer className="bg-gradient-to-b from-midnight-500 to-midnight-600 text-white py-10 sm:py-12 md:py-16 relative">
@@ -116,27 +197,24 @@ const Footer = () => {
             <h3 className="text-lg sm:text-xl font-semibold mb-3 sm:mb-5 font-heading">
               Quick Links
             </h3>
-            <ul className="space-y-2 sm:space-y-3">
-              {[
-                { to: "/", label: "Home" },
-                { to: "/about", label: "About Us" },
-                { to: "/courses", label: "Courses" },
-                { to: "/batches", label: "Batches" },
-                { to: "/faculty", label: "Faculty" },
-                { to: "/success-stories", label: "Success Stories" },
-                { to: "/contact", label: "Contact" },
-              ].map((link, index) => (
+            <ul className="space-y-2 sm:space-y-3 md:space-y-4">
+              {footerLinks.map((link, index) => (
                 <motion.li
                   key={index}
                   variants={linkVariants}
                   whileHover="hover"
                 >
-                  <Link
-                    to={link.to}
-                    className="text-gray-100 hover:text-crimson-300 transition-colors flex items-center"
+                  <a
+                    href={link.href}
+                    onClick={(e) => handleSmoothScroll(e, link.href)}
+                    className={`text-sm sm:text-base lg:text-lg flex items-center transition-all duration-300 group ${
+                      isActive(link.href)
+                        ? "text-crimson-500 font-semibold"
+                        : "text-gray-100 hover:text-crimson-300"
+                    }`}
                   >
-                    <span className="mr-2">›</span> {link.label}
-                  </Link>
+                    <span className="mr-2 transform transition-transform duration-300 group-hover:translate-x-1">›</span> {link.label}
+                  </a>
                 </motion.li>
               ))}
             </ul>
@@ -153,34 +231,23 @@ const Footer = () => {
             <h3 className="text-lg sm:text-xl font-semibold mb-3 sm:mb-5 font-heading">
               Our Programs
             </h3>
-            <ul className="space-y-2 sm:space-y-3">
-              {[
-                { to: "/#courses", label: "UPSC Program", isScroll: true },
-                { to: "/#courses", label: "GPSC Program", isScroll: true },
-                { to: "/#courses", label: "PI Program", isScroll: true },
-                { to: "/#courses", label: "PSI/CONSTABLE Program", isScroll: true },
-                { to: "/#courses", label: "CCE Program", isScroll: true }
-              ].map((program, index) => (
+            <ul className="space-y-2 sm:space-y-3 md:space-y-4">
+              {programLinks.map((program, index) => (
                 <motion.li
                   key={index}
                   variants={linkVariants}
                   whileHover="hover"
                 >
                   <a
-                    href={program.to}
-                    className="text-gray-100 hover:text-crimson-300 transition-colors flex items-center"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      const element = document.getElementById('courses');
-                      if (element) {
-                        element.scrollIntoView({
-                          behavior: 'smooth',
-                          block: 'start',
-                        });
-                      }
-                    }}
+                    href={program.href}
+                    onClick={(e) => handleSmoothScroll(e, program.href)}
+                    className={`text-sm sm:text-base lg:text-lg flex items-center transition-all duration-300 group ${
+                      isActive(program.href) && program.label.includes("UPSC")
+                        ? "text-crimson-500 font-semibold"
+                        : "text-gray-100 hover:text-crimson-300"
+                    }`}
                   >
-                    <span className="mr-2">›</span> {program.label}
+                    <span className="mr-2 transform transition-transform duration-300 group-hover:translate-x-1">›</span> {program.label}
                   </a>
                 </motion.li>
               ))}
@@ -201,21 +268,26 @@ const Footer = () => {
             <ul className="space-y-3 sm:space-y-4">
               <li className="flex items-start group">
                 <MapPin className="mr-3 h-4 w-4 sm:h-5 sm:w-5 text-crimson-400 flex-shrink-0 mt-0.5 group-hover:scale-110 transition-transform duration-300" />
-                <span className="text-gray-100 group-hover:text-crimson-300 transition-colors text-sm sm:text-base">
+                <a 
+                  href="https://maps.google.com/?q=3rd floor, SHREE business hub, TELEPHONE EXCHANGE, GIDC Naroda, Ahmedabad, Gujarat 382330" 
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-gray-100 group-hover:text-crimson-300 transition-colors text-sm sm:text-base"
+                >
                   3rd floor, SHREE business hub, TELEPHONE EXCHANGE, Beside green rio restaurant, GIDC Naroda, Ahmedabad, Gujarat 382330
-                </span>
+                </a>
               </li>
               <li className="flex items-center group">
                 <Phone className="mr-3 h-4 w-4 sm:h-5 sm:w-5 text-crimson-400 group-hover:scale-110 transition-transform duration-300" />
-                <span className="text-gray-100 group-hover:text-crimson-300 transition-colors text-sm sm:text-base">
+                <a href="tel:7990661375" className="text-gray-100 group-hover:text-crimson-300 transition-colors text-sm sm:text-base">
                   7990661375
-                </span>
+                </a>
               </li>
               <li className="flex items-center group">
                 <Mail className="mr-3 h-4 w-4 sm:h-5 sm:w-5 text-crimson-400 group-hover:scale-110 transition-transform duration-300" />
-                <span className="text-gray-100 group-hover:text-crimson-300 transition-colors text-sm sm:text-base">
+                <a href="mailto:genxias@gmail.com" className="text-gray-100 group-hover:text-crimson-300 transition-colors text-sm sm:text-base">
                   genxias@gmail.com
-                </span>
+                </a>
               </li>
             </ul>
           </motion.div>

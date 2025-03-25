@@ -188,9 +188,15 @@ const Header = ({
     return activeSection === href;
   };
 
-  // Smooth scrolling function
-  const handleSmoothScroll = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
-    e.preventDefault();
+  // Improved smooth scrolling function with better event handling
+  const handleSmoothScroll = (e: React.MouseEvent<HTMLAnchorElement> | React.TouchEvent<HTMLAnchorElement>, href: string) => {
+    // Prevent default behavior and stop propagation
+    if (e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+
+    console.log(`Navigating to: ${href}`); // Debugging log
 
     // Set the active section immediately on click
     setActiveSection(href);
@@ -206,16 +212,28 @@ const Header = ({
       const targetElement = document.getElementById(targetId);
 
       if (targetElement) {
-        const offsetTop = targetElement.getBoundingClientRect().top + window.pageYOffset - 80;
-        window.scrollTo({
-          top: offsetTop,
-          behavior: "smooth",
-        });
+        // Calculate position accounting for header height
+        const headerHeight = 80; // Adjust this value if your header height changes
+        const offsetTop = targetElement.getBoundingClientRect().top + window.pageYOffset - headerHeight;
+        
+        try {
+          // Scroll with smooth behavior
+          window.scrollTo({
+            top: offsetTop,
+            behavior: "smooth",
+          });
+        } catch (error) {
+          // Fallback for browsers that don't support smooth scrolling
+          window.scrollTo(0, offsetTop);
+        }
+      } else {
+        console.warn(`Element with ID "${targetId}" not found.`); // Debugging log
       }
     }
 
     // Close mobile menu if it's open
     if (mobileMenuOpen) {
+      console.log('Closing mobile menu'); // Debugging log
       setMobileMenuOpen(false);
       // Return focus to menu button after closing menu
       setTimeout(() => {
@@ -236,7 +254,7 @@ const Header = ({
   };
 
   // Function to handle clicking on a submenu item
-  const handleSubmenuItemClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+  const handleSubmenuItemClick = (e: React.MouseEvent<HTMLAnchorElement> | React.TouchEvent<HTMLAnchorElement>, href: string) => {
     handleSmoothScroll(e, href);
     setActiveSubmenu(null); // Close the submenu
   };
@@ -377,23 +395,23 @@ const Header = ({
             aria-modal="true"
             aria-label="Mobile navigation menu"
           >
-            <div className="px-4 py-5 space-y-3 max-h-[70vh] overflow-y-auto">
+            <div className="px-4 py-5 space-y-4 max-h-[80vh] overflow-y-auto">
               {menuItems.map((item, index) => (
-                <div key={index} className="border-b border-midnight-400 pb-2">
+                <div key={index} className="border-b border-midnight-400 pb-3">
                   {item.submenu ? (
                     <div>
                       <button
                         onClick={() => toggleSubmenu(item.href)}
-                        className={`flex justify-between items-center w-full py-2 px-3 rounded-md transition-colors duration-300 ${
+                        className={`flex justify-between items-center w-full py-3 px-4 rounded-md transition-colors duration-300 ${
                           isActive(item.href) 
                             ? "text-crimson-500 font-semibold bg-midnight-500/30" 
-                            : "text-white hover:bg-midnight-500/20"
+                            : "text-white hover:bg-midnight-500/20 active:bg-midnight-500/40"
                         }`}
                         aria-expanded={activeSubmenu === item.href}
                       >
-                        <span>{item.label}</span>
+                        <span className="text-base font-medium">{item.label}</span>
                         <svg
-                          className={`h-4 w-4 transition-transform ${
+                          className={`h-5 w-5 transition-transform ${
                             activeSubmenu === item.href ? "transform rotate-180" : ""
                           }`}
                           fill="none"
@@ -416,20 +434,28 @@ const Header = ({
                             animate={{ height: "auto", opacity: 1 }}
                             exit={{ height: 0, opacity: 0 }}
                             transition={{ duration: 0.2 }}
-                            className="pl-4 mt-1 space-y-1"
+                            className="pl-4 mt-2 space-y-2"
                           >
                             {item.submenu.map((subItem, subIndex) => (
                               <a
                                 key={subIndex}
                                 href={subItem.href}
                                 onClick={(e) => handleSubmenuItemClick(e, subItem.href)}
-                                className={`block py-2 px-3 rounded-md transition-colors duration-300 ${
+                                onTouchEnd={(e) => {
+                                  // For mobile browsers that capture touch events differently
+                                  if (e.cancelable) {
+                                    e.preventDefault();
+                                    handleSubmenuItemClick(e, subItem.href);
+                                  }
+                                }}
+                                className={`block py-3 px-4 rounded-md transition-colors duration-300 ${
                                   isActive(subItem.href)
                                     ? "text-crimson-500 font-semibold bg-midnight-500/30"
-                                    : "text-white/90 hover:bg-midnight-500/20 hover:text-crimson-300"
+                                    : "text-white/90 hover:bg-midnight-500/20 hover:text-crimson-300 active:text-crimson-500 active:bg-midnight-500/40"
                                 }`}
+                                aria-label={`Navigate to ${subItem.label} section`}
                               >
-                                {subItem.label}
+                                <span className="text-base">{subItem.label}</span>
                               </a>
                             ))}
                           </motion.div>
@@ -440,13 +466,21 @@ const Header = ({
                     <a
                       href={item.href}
                       onClick={(e) => handleSmoothScroll(e, item.href)}
-                      className={`block py-2 px-3 rounded-md transition-colors duration-300 ${
+                      onTouchEnd={(e) => {
+                        // For mobile browsers that capture touch events differently
+                        if (e.cancelable) {
+                          e.preventDefault();
+                          handleSmoothScroll(e, item.href);
+                        }
+                      }}
+                      className={`block py-3 px-4 rounded-md transition-colors duration-300 ${
                         isActive(item.href)
                           ? "text-crimson-500 font-semibold bg-midnight-500/30"
-                          : "text-white hover:bg-midnight-500/20"
+                          : "text-white hover:bg-midnight-500/20 active:text-crimson-300 active:bg-midnight-500/40"
                       }`}
+                      aria-label={`Navigate to ${item.label} section`}
                     >
-                      {item.label}
+                      <span className="text-base font-medium">{item.label}</span>
                     </a>
                   )}
                 </div>
@@ -454,20 +488,35 @@ const Header = ({
               
               {/* Mobile contact info */}
               <div className="pt-4 space-y-3">
-                <a href={`tel:${contactPhone}`} className="flex items-center text-white/90 hover:text-white transition-colors px-3 py-2 rounded-md hover:bg-midnight-500/20">
-                  <Phone className="h-5 w-5 mr-3 text-crimson-400" /> {contactPhone}
+                <a 
+                  href={`tel:${contactPhone}`} 
+                  className="flex items-center text-white/90 hover:text-white transition-colors px-4 py-3 rounded-md hover:bg-midnight-500/20 active:bg-midnight-500/40"
+                >
+                  <Phone className="h-5 w-5 mr-3 text-crimson-400" /> 
+                  <span className="text-base">{contactPhone}</span>
                 </a>
-                <a href={`mailto:${contactEmail}`} className="flex items-center text-white/90 hover:text-white transition-colors px-3 py-2 rounded-md hover:bg-midnight-500/20">
-                  <Mail className="h-5 w-5 mr-3 text-crimson-400" /> {contactEmail}
+                <a 
+                  href={`mailto:${contactEmail}`} 
+                  className="flex items-center text-white/90 hover:text-white transition-colors px-4 py-3 rounded-md hover:bg-midnight-500/20 active:bg-midnight-500/40"
+                >
+                  <Mail className="h-5 w-5 mr-3 text-crimson-400" /> 
+                  <span className="text-base">{contactEmail}</span>
                 </a>
                 <Button
                   size="sm" 
-                  className="w-full bg-crimson-500 hover:bg-crimson-600 text-white transition-all duration-300"
+                  className="w-full bg-crimson-500 hover:bg-crimson-600 active:bg-crimson-700 text-white transition-all duration-300 py-6"
                 >
                   <a
                     href="#contact"
                     onClick={(e) => handleSmoothScroll(e, "#contact")}
-                    className="flex items-center justify-center w-full"
+                    onTouchEnd={(e) => {
+                      // For mobile browsers that capture touch events differently
+                      if (e.cancelable) {
+                        e.preventDefault();
+                        handleSmoothScroll(e, "#contact");
+                      }
+                    }}
+                    className="flex items-center justify-center w-full text-base font-medium"
                   >
                     Contact Us
                   </a>
