@@ -1,6 +1,7 @@
 import { Suspense, useEffect } from "react";
 import { useRoutes, Routes, Route, useLocation } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
+import { Analytics } from "@vercel/analytics/react";
 import Home from "./components/home";
 import routes from "tempo-routes";
 
@@ -102,6 +103,7 @@ function App() {
           {import.meta.env.VITE_TEMPO === "true" && useRoutes(routes)}
         </motion.div>
       </AnimatePresence>
+      <Analytics />
     </Suspense>
   );
 }
